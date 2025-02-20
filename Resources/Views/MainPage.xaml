@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UTSProject.Resources.Views.MainPage"
+             Title="MainPage">
+    <ScrollView>
+        <StackLayout x:Name="MainStack" Orientation="Vertical" Padding="20" Spacing="20" BackgroundColor="LightBlue">
+            <Label Text="Search for connection" 
+           FontSize="Header"
+           HorizontalOptions="Center"/>
+            <Grid HeightRequest="200" 
+          RowDefinitions="50, 50, 50"
+          ColumnDefinitions="Auto,*"
+          BackgroundColor="grey" 
+          RowSpacing="15"
+          ColumnSpacing="15"
+          Padding="15">
+
+                <DatePicker Grid.Column="1" 
+                    Grid.Row="2" 
+                    HorizontalOptions="End"/>
+                <TimePicker Grid.Column="0" 
+                    Grid.Row="2" 
+                    HorizontalOptions="End"
+                    HeightRequest="20"/>
+                <Editor x:Name="Start"
+                VerticalTextAlignment="Center"
+                Grid.ColumnSpan="2" Grid.Row="0"
+                Placeholder="Enter start position"/>
+                <Editor x:Name="Destination"
+                VerticalTextAlignment="Center"
+                Grid.ColumnSpan="2" Grid.Row="1"
+                Placeholder="Enter Destination"/>
+            </Grid>
+            <Button Text="Search" WidthRequest="150"/>
+
+            <Label Text="Traffic News" FontSize="Header"/>
+            <ScrollView Padding="15" HeightRequest="300" BackgroundColor="pink">
+                <VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>
