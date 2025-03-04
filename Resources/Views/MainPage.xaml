@@ -2,44 +2,52 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="UTSProject.Resources.Views.MainPage"
-             Title="Search">
+             Title="Connections">
+    <ContentPage.Resources>
+        <Style x:Key="LabelHeader" TargetType="Label">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Margin" Value="24"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
+        </Style>
+    </ContentPage.Resources>
     <ScrollView>
         <StackLayout x:Name="MainStack" Orientation="Vertical" Padding="20" Spacing="20" BackgroundColor="LightBlue">
-            <Label Text="Search for connection" 
-           FontSize="Header"
-           HorizontalOptions="Center"/>
-            <Grid HeightRequest="200" 
-          RowDefinitions="50, 50, 50"
-          ColumnDefinitions="Auto,*"
-          BackgroundColor="grey" 
-          RowSpacing="15"
-          ColumnSpacing="15"
-          Padding="15">
-
-                <DatePicker Grid.Column="1" 
-                    Grid.Row="2" 
-                    HorizontalOptions="End"/>
-                <TimePicker Grid.Column="0" 
-                    Grid.Row="2" 
-                    HorizontalOptions="End"
-                    HeightRequest="20"/>
-                <Editor x:Name="Start"
-                VerticalTextAlignment="Center"
-                Grid.ColumnSpan="2" Grid.Row="0"
-                Placeholder="Enter start position"/>
-                <Editor x:Name="Destination"
-                VerticalTextAlignment="Center"
-                Grid.ColumnSpan="2" Grid.Row="1"
-                Placeholder="Enter Destination"/>
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="20">
+                <Border Padding="5" BackgroundColor="AliceBlue" Grid.Column="0">
+                    <DatePicker Grid.Column="0" Grid.Row="1" 
+                        BackgroundColor="AliceBlue"
+                        FontSize="24"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"/>
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+                </Border>
+                <Border Padding="5"  BackgroundColor="AliceBlue" Grid.Column="1">
+                    <TimePicker Grid.Column="1" Grid.Row="1"   
+                        FontSize="24"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"/>
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+                </Border>
             </Grid>
-            <Button Text="Search" WidthRequest="150"/>
 
-            <Label Text="Traffic News" FontSize="Header"/>
+            <Button Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
+                    Margin="10"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Text="Search" 
+                    WidthRequest="150"
+                    />
+            <!--<Label Text="Traffic News" FontSize="Header"/>
             <ScrollView Padding="15" HeightRequest="300" BackgroundColor="pink">
                 <VerticalStackLayout>
 
                 </VerticalStackLayout>
-            </ScrollView>
+            </ScrollView>-->
         </StackLayout>
     </ScrollView>
 
