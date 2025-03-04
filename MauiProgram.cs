@@ -13,8 +13,8 @@ namespace UTSProject
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
                 {
-                    fonts.AddFont("Roboto-Regular.ttf", "RobotoRegular");
-                    fonts.AddFont("Roboto-Semibold.ttf", "RobotoSemibold");
+                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
 #if DEBUG
@@ -25,9 +25,6 @@ namespace UTSProject
             builder.Services.AddSingleton<MainViewModel>();
             //User Page
             builder.Services.AddSingleton<UserPage>();
-            builder.Services.AddSingleton<UserViewModel>();
-            //Tickets Page
-            builder.Services.AddSingleton<TicketsPage>();
             builder.Services.AddSingleton<UserViewModel>();
 #endif
 
