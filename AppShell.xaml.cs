@@ -11,6 +11,7 @@ namespace UTSProject
             //Registering routes
             Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
             Routing.RegisterRoute(nameof(UserPage), typeof(UserPage));
+            Routing.RegisterRoute(nameof(TicketsPage), typeof(TicketsPage));
         }
     }
 }
