@@ -26,6 +26,9 @@ namespace UTSProject
             //User Page
             builder.Services.AddSingleton<UserPage>();
             builder.Services.AddSingleton<UserViewModel>();
+            //Tickets Page
+            builder.Services.AddSingleton<TicketsPage>();
+            builder.Services.AddSingleton<TicketsPageViewModel>();
 #endif
 
             return builder.Build();
