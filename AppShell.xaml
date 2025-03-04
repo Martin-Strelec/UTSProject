@@ -38,6 +38,13 @@
                 Route="UserPage"
                 />
         </Tab>
+        <Tab Title="Tickets" Icon="ticketicon.svg">
+            <ShellContent
+                Title="Tickets"
+                ContentTemplate="{DataTemplate local:TicketsPage}"
+                Route="UserPage"
+                />
+        </Tab>
     </TabBar>
     
     
