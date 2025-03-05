@@ -5,7 +5,7 @@ using UTSProject.Resources.Models;
 
 namespace UTSProject.Resources.Services
 {
-    class NTAService
+    public class NTAService
     {
         private readonly HttpClient _httpClient;
         private const string apiUrl = "https://api.nationaltransport.ie/gtfsr/v2/gtfsr?format=json"; //URI
