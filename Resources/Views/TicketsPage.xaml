@@ -4,9 +4,21 @@
              x:Class="UTSProject.Resources.Views.TicketsPage"
              Title="Tickets">
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <Grid WidthRequest="300" HeightRequest="300" Margin="0,50,0,0">
+            <!-- Main Ticket Shape -->
+            <Border Background="LightGray" Stroke="White" StrokeThickness="2" 
+            StrokeShape="RoundRectangle 20"
+            WidthRequest="300" HeightRequest="300" Padding="20"/>
+
+            <!-- Bottom Cutout -->
+            <Ellipse WidthRequest="40" HeightRequest="40" Fill="White"
+             Stroke="White" StrokeThickness="2"
+             HorizontalOptions="Center"
+             TranslationY="150"/>
+
+            <!-- Ticket Info -->
+            <Label Text="Ticket Info" HorizontalOptions="Center" VerticalOptions="Center"/>
+        </Grid>
+
     </VerticalStackLayout>
 </ContentPage>

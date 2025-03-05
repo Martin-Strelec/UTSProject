@@ -3,20 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="UTSProject.Resources.Views.MainPage"
              Title="Connections">
-    <ContentPage.Resources>
-        <Style x:Key="LabelHeader" TargetType="Label">
-            <Setter Property="FontSize" Value="24"/>
-            <Setter Property="Margin" Value="24"/>
-            <Setter Property="HorizontalOptions" Value="Center"/>
-            <Setter Property="VerticalOptions" Value="Center"/>
-        </Style>
-    </ContentPage.Resources>
     <ScrollView>
-        <StackLayout x:Name="MainStack" Orientation="Vertical" Padding="20" Spacing="20" BackgroundColor="LightBlue">
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="20">
-                <Border Padding="5" BackgroundColor="AliceBlue" Grid.Column="0">
-                    <DatePicker Grid.Column="0" Grid.Row="1" 
-                        BackgroundColor="AliceBlue"
+        <StackLayout x:Name="MainStack" Orientation="Vertical" Padding="20" Spacing="20" BackgroundColor="{StaticResource bgColor}">
+            <Grid ColumnDefinitions="*,0.25*,*">
+                <Border Padding="5" BackgroundColor="{StaticResource bgColor}" Grid.Column="0">
+                    <DatePicker
                         FontSize="24"
                         VerticalOptions="Center"
                         HorizontalOptions="Center"/>
@@ -24,8 +15,8 @@
                         <RoundRectangle CornerRadius="10"/>
                     </Border.StrokeShape>
                 </Border>
-                <Border Padding="5"  BackgroundColor="AliceBlue" Grid.Column="1">
-                    <TimePicker Grid.Column="1" Grid.Row="1"   
+                <Border Padding="5"  BackgroundColor="{StaticResource bgColor}" Grid.Column="2">
+                    <TimePicker   
                         FontSize="24"
                         VerticalOptions="Center"
                         HorizontalOptions="Center"/>
@@ -35,12 +26,11 @@
                 </Border>
             </Grid>
 
-            <Button Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
-                    Margin="10"
+            <Button Margin="10"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     Text="Search" 
-                    WidthRequest="150"
+                    WidthRequest="200"
                     />
             <!--<Label Text="Traffic News" FontSize="Header"/>
             <ScrollView Padding="15" HeightRequest="300" BackgroundColor="pink">

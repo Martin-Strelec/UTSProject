@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using UTSProject.Resources.Services;
 using UTSProject.Resources.ViewModels;
 using UTSProject.Resources.Views;
 
@@ -29,6 +30,8 @@ namespace UTSProject
             //Tickets Page
             builder.Services.AddSingleton<TicketsPage>();
             builder.Services.AddSingleton<TicketsPageViewModel>();
+            //GTFSRealTimeData
+            builder.Services.AddSingleton<NTAService>();
 #endif
 
             return builder.Build();

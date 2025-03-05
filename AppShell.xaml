@@ -5,6 +5,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:UTSProject.Resources.Views"
     Shell.FlyoutBehavior="Disabled"
+    Shell.ForegroundColor="{StaticResource bgColor}"
+    Shell.BackgroundColor="{StaticResource fgColor}"
+    Shell.TitleColor="{StaticResource bgColor}"
+    Shell.TabBarBackgroundColor="{StaticResource fgColor}"
+    Shell.TabBarForegroundColor="{StaticResource bgColor}"
+    Shell.TabBarTitleColor="#B3D8A8"
+    Shell.TabBarUnselectedColor="#B3D8A8"
     Title="UTSProject">
 
     <!--<FlyoutItem Title="Home" Icon="houseicon.svg">

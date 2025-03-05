@@ -67,10 +67,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Resources\Models\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <MauiXaml Update="Resources\Views\MainPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
