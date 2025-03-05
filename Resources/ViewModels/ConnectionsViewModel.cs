@@ -1,33 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using UTSProject.Resources.Services;
 using UTSProject.Resources.Models;
+using Android.Net.Wifi.Aware;
 
 namespace UTSProject.Resources.ViewModels
 {
-    class ConnectionsPageViewModel : ObservableObject
+    public partial class ConnectionsViewModel : ObservableObject
     {
-        private readonly NTAService _service;
+        private readonly NTAService _publicTransportService;
 
         public ObservableCollection<Connection> Connections { get; set; } = new();
 
-        public ConnectionsPageViewModel(NTAService service, ObservableCollection<Connection> connections)
+        public ConnectionsViewModel(NTAService publicTransportService)
         {
-            _service = service;
-            Connections = connections;
+            _publicTransportService = publicTransportService;
+            LoadConnections();
         }
 
         private async void LoadConnections()
         {
-            var connections = await _service.GetConnectionsAsync();
-            foreach (var connection in connections)
+            var movies = await _publicTransportService.GetConnectionsAsync();
+            foreach (var Connection in Connections)
             {
-                Connections.Add(connection);
+                Connections.Add(Connection);
             }
         }
     }
