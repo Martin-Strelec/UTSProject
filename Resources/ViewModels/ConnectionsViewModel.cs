@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using UTSProject.Resources.Services;
 using UTSProject.Resources.Models;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml.Controls;
 
 namespace UTSProject.Resources.ViewModels
 {
@@ -22,6 +23,8 @@ namespace UTSProject.Resources.ViewModels
 
         [ObservableProperty]
         private bool _connectionsIsVisible;
+        [ObservableProperty]
+        private bool _buttonIsVisible;
 
         private List<Entity> _entities;
         private int _start;
@@ -35,15 +38,30 @@ namespace UTSProject.Resources.ViewModels
             _start = 0;
             _step = 25;
             ConnectionsIsVisible = false;
+            ButtonIsVisible = false;
             LoadData();
         }
 
         [RelayCommand]
         async Task LoadAnother()
         {
-            
             Connections.Clear();
-            LoadData();
+            UpdateData();
+        }
+
+        private void UpdateData()
+        {
+            for (int i = this._start; i < this._start + this._step; i++)
+            {
+                Connections.Add(
+                    new Test
+                    {
+                        Date = this._entities[i].TripUpdate.Trip.StartDate,
+                        Time = this._entities[i].TripUpdate.Trip.StartTime
+                    });
+            }
+            //Pagination
+            this._start += this._step;
         }
 
         private async void LoadData()
@@ -71,6 +89,9 @@ namespace UTSProject.Resources.ViewModels
 
             //Setting the view to true
             ConnectionsIsVisible = true;
+
+            //Setting the Button to visible
+            ButtonIsVisible = true;
 
             //Pagination
             this._start += this._step;
