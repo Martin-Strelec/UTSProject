@@ -10,7 +10,9 @@
                     <DatePicker
                         FontSize="24"
                         VerticalOptions="Center"
-                        HorizontalOptions="Center"/>
+                        HorizontalOptions="Center"
+                        Date="{Binding SelectedDate, Mode=TwoWay}"
+                        />
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="10"/>
                     </Border.StrokeShape>
@@ -19,7 +21,8 @@
                     <TimePicker   
                         FontSize="24"
                         VerticalOptions="Center"
-                        HorizontalOptions="Center"/>
+                        HorizontalOptions="Center"
+                        Time="{Binding SelectedTime, Mode=TwoWay}"/>
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="10"/>
                     </Border.StrokeShape>
