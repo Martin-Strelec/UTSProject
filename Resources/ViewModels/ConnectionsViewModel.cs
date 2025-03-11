@@ -16,6 +16,9 @@ namespace UTSProject.Resources.ViewModels
         private string _name;
 
         [ObservableProperty]
+        private string _vehicleID;
+
+        [ObservableProperty]
         private ObservableCollection<Test> _connections;
 
         [ObservableProperty]
@@ -57,7 +60,8 @@ namespace UTSProject.Resources.ViewModels
                     new Test
                     {
                         Date = this._entities[i].TripUpdate.Trip.StartDate,
-                        Time = this._entities[i].TripUpdate.Trip.StartTime
+                        Time = this._entities[i].TripUpdate.Trip.StartTime,
+                        VehicleID = this._entities[i].TripUpdate.Vehicle == null ? null : this._entities[i].TripUpdate.Vehicle.Id
                     });
             }
             //Pagination
@@ -78,9 +82,10 @@ namespace UTSProject.Resources.ViewModels
             for (int i = this._start; i < this._start+this._step; i++)
             {
                 Connections.Add(
-                    new Test { 
-                        Date = this._entities[i].TripUpdate.Trip.StartDate, 
-                        Time = this._entities[i].TripUpdate.Trip.StartTime 
+                    new Test {
+                        Date = this._entities[i].TripUpdate.Trip.StartDate,
+                        Time = this._entities[i].TripUpdate.Trip.StartTime,
+                        VehicleID = this._entities[i].TripUpdate.Vehicle == null ? null : this._entities[i].TripUpdate.Vehicle.Id
                     });
             }
 
