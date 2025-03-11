@@ -10,37 +10,45 @@ namespace UTSProject.Resources.Models
 { 
     public class GtfsRealtimeResponse
     {
+        public Header Header { get; set; }
+        [JsonProperty("entity")]
         public List<Entity> Entity { get; set; }
+    }
+
+    public class Header
+    {
+        [JsonProperty("gtfs_realtime_version")]
+        public required string GtfsRealtimeVersion { get; set; }
     }
 
     public class Entity
     {
-        public string Id { get; set; }
+        public required string Id { get; set; }
 
         [JsonProperty("trip_update")]
-        public TripUpdate TripUpdate { get; set; }
+        public required TripUpdate TripUpdate { get; set; }
     }
 
     public class TripUpdate
     {
-        public Trip Trip { get; set; }
+        public required Trip Trip { get; set; }
 
         [JsonProperty("stop_time_update")]
-        public List<StopUpdate> StopUpdates { get; set; }
+        public required List<StopUpdate> StopUpdates { get; set; }
 
-        public Vehicle Vehicle { get; set; }
+        public required Vehicle Vehicle { get; set; }
     }
 
     public class Trip
     {
         [JsonProperty("trip_id")]
-        public string TripID { get; set; }
+        public required string TripID { get; set; }
 
         [JsonProperty("start_time")]
-        public string StartTime { get; set; }
+        public required string StartTime { get; set; }
 
         [JsonProperty("start_date")]
-        public string StartDate { get; set; }
+        public required string StartDate { get; set; }
 
         [JsonProperty("route_id")]
         public string RouteID { get; set; }
