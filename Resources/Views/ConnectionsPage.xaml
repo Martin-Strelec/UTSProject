@@ -6,7 +6,8 @@
              Title="Connections">
     <ScrollView>
         <VerticalStackLayout>
-            <ActivityIndicator IsRunning="{Binding IndicatorIsVisible}"/>
+            <ActivityIndicator IsRunning="{Binding IndicatorIsVisible}"
+                               Margin="10"/>
             <CollectionView ItemsSource="{Binding Connections}"
                             IsVisible="{Binding ConnectionsIsVisible}">
                 <CollectionView.ItemTemplate>
@@ -19,6 +20,8 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
             <Button x:Name="LoadMoreBtn"
+                    IsVisible="{Binding ButtonIsVisible}"
+                    Style="{StaticResource DefaultButton}"
                     Command="{Binding LoadAnotherCommand}"
                     Text="Load more"/>
         </VerticalStackLayout>
