@@ -4,65 +4,82 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace UTSProject.Resources.Models
-{
-    public class Connection
+{ 
+    public class GtfsRealtimeResponse
     {
-        [JsonPropertyName("id")]
+        public List<Entity> Entity { get; set; }
+    }
+
+    public class Entity
+    {
         public string Id { get; set; }
 
-        [JsonPropertyName("trip_update")]
+        [JsonProperty("trip_update")]
         public TripUpdate TripUpdate { get; set; }
     }
+
     public class TripUpdate
     {
-        [JsonPropertyName("trip")]
         public Trip Trip { get; set; }
 
-        [JsonPropertyName("stop_time_update")]
-        public List<StopTimeUpdate> StopTimeUpdate { get; set; }
+        [JsonProperty("stop_time_update")]
+        public List<StopUpdate> StopUpdates { get; set; }
+
+        public Vehicle Vehicle { get; set; }
     }
+
     public class Trip
     {
-        [JsonPropertyName("trip_id")]
-        public string TripId { get; set; }
+        [JsonProperty("trip_id")]
+        public string TripID { get; set; }
 
-        [JsonPropertyName("start_time")]
+        [JsonProperty("start_time")]
         public string StartTime { get; set; }
 
-        [JsonPropertyName("start_date")]
+        [JsonProperty("start_date")]
         public string StartDate { get; set; }
 
-        [JsonPropertyName("schedule_relationship")]
+        [JsonProperty("route_id")]
+        public string RouteID { get; set; }
+
+        [JsonProperty("direction_id")]
+        public int Direction { get; set; }
+
+        [JsonProperty("schedule_relationship")]
         public string ScheduleRelationship { get; set; }
-
-        [JsonPropertyName("route_id")]
-        public string RouteId { get; set; }
-
-        [JsonPropertyName("direction_id")]
-        public int DirectionId { get; set; }
     }
-    public class StopTimeUpdate
+
+    public class StopUpdate
     {
-        [JsonPropertyName("stop_sequence")]
+        [JsonProperty("stop_sequence")]
         public int StopSequence { get; set; }
 
-        [JsonPropertyName("arrival")]
-        public Delay Arrival { get; set; }
+        public Arrival Arrival { get; set; }
+        public Departure Departure { get; set; }
 
-        [JsonPropertyName("departure")]
-        public Delay Departure { get; set; }
+        [JsonProperty("stop_id")]
+        public string StopID { get; set; }
 
-        [JsonPropertyName("stop_id")]
-        public string StopId { get; set; }
-
-        [JsonPropertyName("schedule_relationship")]
+        [JsonProperty("schedule_relationship")]
         public string ScheduleRelationship { get; set; }
     }
-    public class Delay
+
+    public class Arrival
     {
-        [JsonPropertyName("delay")]
-        public int DelayValue { get; set; }
+        public int? Delay { get; set; } // Nullable to handle missing values
     }
+
+    public class Departure
+    {
+        public int? Delay { get; set; } // Nullable to handle missing values
+    }
+
+    public class Vehicle
+    {
+        public string Id { get; set; }
+    }
+
 }
