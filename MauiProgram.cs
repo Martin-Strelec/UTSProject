@@ -29,7 +29,10 @@ namespace UTSProject
             builder.Services.AddSingleton<UserViewModel>();
             //Tickets Page
             builder.Services.AddSingleton<TicketsPage>();
-            builder.Services.AddSingleton<TicketsPageViewModel>();
+            builder.Services.AddSingleton<TicketsViewModel>();
+            //Connections Page
+            builder.Services.AddSingleton<ConnectionsPage>();
+            builder.Services.AddSingleton<ConnectionsViewModel>();
             //GTFSRealTimeData
             builder.Services.AddSingleton<NTAService>();
 #endif
