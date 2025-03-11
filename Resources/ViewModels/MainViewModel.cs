@@ -37,8 +37,7 @@ namespace UTSProject.Resources.ViewModels
             {
                 {"userInput", input}
             };
-
-            await Shell.Current.GoToAsync("ConnectionsPage", parameters);
+            await Shell.Current.GoToAsync(nameof(ConnectionsPage), true, parameters);
         }
     }
 }
