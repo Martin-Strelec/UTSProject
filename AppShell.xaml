@@ -31,21 +31,21 @@
     </FlyoutItem>-->
 
     <TabBar>
-        <Tab Title="Search" Icon="searchicon.svg">
+        <Tab Title="Search" Icon="searchicon.png">
             <ShellContent
                 Title="Home"
                 ContentTemplate="{DataTemplate local:MainPage}"
                 Route="MainPage" 
                 />
         </Tab>
-        <Tab Title="User" Icon="usericon.svg">
+        <Tab Title="User" Icon="usericon.png">
             <ShellContent
                 Title="User"
                 ContentTemplate="{DataTemplate local:UserPage}"
                 Route="UserPage"
                 />
         </Tab>
-        <Tab Title="Tickets" Icon="ticketicon.svg">
+        <Tab Title="Tickets" Icon="ticketicon.png">
             <ShellContent
                 Title="Tickets"
                 ContentTemplate="{DataTemplate local:TicketsPage}"
