@@ -6,9 +6,15 @@ using System.Threading.Tasks;
 
 namespace UTSProject.Resources.Models
 {
-    internal class UserInput
+    public class UserInput
     {
         public DateTime Date {  get; set; }
         public TimeSpan Time { get; set; }
+
+        public UserInput(DateTime date, TimeSpan time)
+        {
+            Date = date;
+            Time = time;
+        }
     }
 }
