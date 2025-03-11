@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UTSProject.Resources.ViewModels
 {
-    class TicketsPageViewModel
+    class TicketsViewModel
     {
 
     }
