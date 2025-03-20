@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,13 +32,16 @@ namespace UTSProject.Resources.ViewModels
         [RelayCommand]
         async Task Search()
         {
-            UserInput input = new UserInput(SelectedDate, SelectedTime);
-
-            Dictionary<string, object> parameters = new Dictionary<string, object>()
-            {
-                {"userInput", input}
-            };
-            await Shell.Current.GoToAsync(nameof(ConnectionsPage), true, parameters);
+            DateTime input = new DateTime(
+                SelectedDate.Year,
+                SelectedDate.Month,
+                SelectedDate.Day,
+                SelectedTime.Hours,
+                SelectedTime.Minutes,
+                SelectedTime.Seconds
+            );
+            //Debug.WriteLine(input);
+            await Shell.Current.GoToAsync($"./{nameof(ConnectionsPage)}?userinput={input}");
         }
     }
 }
