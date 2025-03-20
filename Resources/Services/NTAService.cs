@@ -24,7 +24,7 @@ namespace UTSProject.Resources.Services
           _client = new HttpClient();
         }
 
-        public async Task<List<Entity>> ReadDataAsync()
+        public async IAsyncEnumerable<Entity> ReadDataAsync(int start, int step)
         {
             Response = new GtfsRealtimeResponse();
 
@@ -47,7 +47,10 @@ namespace UTSProject.Resources.Services
                 Debug.WriteLine(@"\tERROR {0}", ex.Message);
             }
 
-            return Response.Entity;
+            foreach (var entity in Response.Entity.Skip(start).Take(step))
+            {
+                yield return entity;
+            }
         }
     }
 }
