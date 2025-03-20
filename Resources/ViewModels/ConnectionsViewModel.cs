@@ -3,12 +3,20 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using UTSProject.Resources.Services;
 using UTSProject.Resources.Models;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.UI.Xaml.Controls;
+using System.Globalization;
+using System.Diagnostics;
 
 namespace UTSProject.Resources.ViewModels
 {
+    [QueryProperty(nameof(UserInput), "userInput")]
     public partial class ConnectionsViewModel : ObservableObject
     {
+        [ObservableProperty]
+        private DateTime _userInput;
+
+        //[ObservableProperty]
+        //private string _delay;
+
         [ObservableProperty]
         private string _date;
 
@@ -19,7 +27,7 @@ namespace UTSProject.Resources.ViewModels
         private string _vehicleID;
 
         [ObservableProperty]
-        private ObservableCollection<Test> _connections;
+        private ObservableCollection<ConnectionDisplayData> _connections;
 
         [ObservableProperty]
         private bool _indicatorIsVisible;
@@ -34,7 +42,7 @@ namespace UTSProject.Resources.ViewModels
         private int _step;
 
         private readonly NTAService _publicTransportService;
-        
+
         public ConnectionsViewModel(NTAService publicTransportService)
         {
             _publicTransportService = publicTransportService;
@@ -48,24 +56,12 @@ namespace UTSProject.Resources.ViewModels
         [RelayCommand]
         async Task LoadAnother()
         {
+            // Clear the Collection
             Connections.Clear();
-            UpdateData();
-        }
-
-        private void UpdateData()
-        {
-            for (int i = this._start; i < this._start + this._step; i++)
-            {
-                Connections.Add(
-                    new Test
-                    {
-                        Date = this._entities[i].TripUpdate.Trip.StartDate,
-                        Time = this._entities[i].TripUpdate.Trip.StartTime,
-                        VehicleID = this._entities[i].TripUpdate.Vehicle == null ? null : this._entities[i].TripUpdate.Vehicle.Id
-                    });
-            }
-            //Pagination
-            this._start += this._step;
+            // Hide the button
+            ButtonIsVisible = false;
+            // Load new data
+            LoadData();
         }
 
         private async void LoadData()
@@ -74,19 +70,17 @@ namespace UTSProject.Resources.ViewModels
             IndicatorIsVisible = true;
 
             //Initializing Collection
-            Connections = new ObservableCollection<Test>();
+            Connections = new ObservableCollection<ConnectionDisplayData>();
 
             //Using NTAService method for storing entities
-            _entities = await _publicTransportService.ReadDataAsync();
-
-            for (int i = this._start; i < this._start+this._step; i++)
+            await foreach (var entity in _publicTransportService.ReadDataAsync(_start, _step)) 
             {
-                Connections.Add(
-                    new Test {
-                        Date = this._entities[i].TripUpdate.Trip.StartDate,
-                        Time = this._entities[i].TripUpdate.Trip.StartTime,
-                        VehicleID = this._entities[i].TripUpdate.Vehicle == null ? null : this._entities[i].TripUpdate.Vehicle.Id
-                    });
+                Connections.Add(new ConnectionDisplayData
+                {
+                    Date = entity.TripUpdate.Trip.StartDate,
+                    Time = entity.TripUpdate.Trip.StartTime,
+                    VehicleID = entity.TripUpdate.Vehicle?.Id
+                });
             }
 
             //Hiding the loading indicator
@@ -97,9 +91,22 @@ namespace UTSProject.Resources.ViewModels
 
             //Setting the Button to visible
             ButtonIsVisible = true;
-
+            
             //Pagination
             this._start += this._step;
+        }
+        private DateTime ConvertTimeAndDate(ReadOnlySpan<char> time, ReadOnlySpan<char> date)
+        {
+            string timeFormat = @"hh\:mm\:ss"; // Time Format
+
+            if ((int.TryParse(date.Slice(0, 4), out int year) &&
+                 int.TryParse(date.Slice(4, 2), out int month) &&
+                 int.TryParse(date.Slice(6, 2), out int day)) &&
+                 (TimeOnly.TryParseExact(time, timeFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out TimeOnly newTime)))
+            {
+                return new DateTime(year, month, day, newTime.Hour, newTime.Minute, newTime.Second);
+            }
+            return DateTime.Now;
         }
     }
 }
