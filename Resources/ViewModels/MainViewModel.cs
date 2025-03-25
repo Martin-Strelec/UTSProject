@@ -32,16 +32,14 @@ namespace UTSProject.Resources.ViewModels
         [RelayCommand]
         async Task Search()
         {
-            DateTime input = new DateTime(
-                SelectedDate.Year,
-                SelectedDate.Month,
-                SelectedDate.Day,
-                SelectedTime.Hours,
-                SelectedTime.Minutes,
-                SelectedTime.Seconds
-            );
-            //Debug.WriteLine(input);
-            await Shell.Current.GoToAsync($"./{nameof(ConnectionsPage)}?userinput={input}");
+            UserInput input = new UserInput(SelectedDate, SelectedTime);
+
+            Debug.WriteLine(input);
+            await Shell.Current.GoToAsync($"./{nameof(ConnectionsPage)}",
+                new Dictionary<string, object>
+                {
+                    ["UserInput"] = input
+                });
         }
     }
 }
