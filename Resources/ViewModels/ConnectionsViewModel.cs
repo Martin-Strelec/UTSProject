@@ -8,14 +8,14 @@ using System.Diagnostics;
 
 namespace UTSProject.Resources.ViewModels
 {
-    [QueryProperty(nameof(UserInput), "userInput")]
+    [QueryProperty(nameof(UserInput), nameof(UserInput))]
     public partial class ConnectionsViewModel : ObservableObject
     {
         [ObservableProperty]
-        private DateTime _userInput;
+        UserInput _userInput;
 
-        //[ObservableProperty]
-        //private string _delay;
+        [ObservableProperty]
+        private string _tripID;
 
         [ObservableProperty]
         private string _date;
@@ -37,20 +37,13 @@ namespace UTSProject.Resources.ViewModels
         [ObservableProperty]
         private bool _buttonIsVisible;
 
-        private List<Entity> _entities;
-        private int _start;
-        private int _step;
-
         private readonly NTAService _publicTransportService;
 
         public ConnectionsViewModel(NTAService publicTransportService)
         {
             _publicTransportService = publicTransportService;
-            _start = 0;
-            _step = 25;
             ConnectionsIsVisible = false;
             ButtonIsVisible = false;
-            LoadData();
         }
 
         [RelayCommand]
@@ -61,10 +54,21 @@ namespace UTSProject.Resources.ViewModels
             // Hide the button
             ButtonIsVisible = false;
             // Load new data
-            LoadData();
+            await foreach (var entity in _publicTransportService.InitializeData())
+            {
+                Connections.Add(new ConnectionDisplayData
+                {
+                    Date = entity.TripUpdate.Trip.StartDate,
+                    TripID = entity.TripUpdate.Trip.TripID,
+                    Time = entity.TripUpdate.Trip.StartTime,
+                    VehicleID = entity.TripUpdate.Vehicle?.Id
+                });
+            }
+            // Hide the button
+            ButtonIsVisible = true;
         }
 
-        private async void LoadData()
+        public async void LoadData()
         {
             //Showing the loading indicator
             IndicatorIsVisible = true;
@@ -73,7 +77,10 @@ namespace UTSProject.Resources.ViewModels
             Connections = new ObservableCollection<ConnectionDisplayData>();
 
             //Using NTAService method for storing entities
-            await foreach (var entity in _publicTransportService.ReadDataAsync(_start, _step)) 
+            await _publicTransportService.ReadDataAsync(UserInput.Time);
+
+            Debug.WriteLine(UserInput.Time);
+            await foreach (var entity in _publicTransportService.InitializeData())
             {
                 Connections.Add(new ConnectionDisplayData
                 {
@@ -91,22 +98,6 @@ namespace UTSProject.Resources.ViewModels
 
             //Setting the Button to visible
             ButtonIsVisible = true;
-            
-            //Pagination
-            this._start += this._step;
-        }
-        private DateTime ConvertTimeAndDate(ReadOnlySpan<char> time, ReadOnlySpan<char> date)
-        {
-            string timeFormat = @"hh\:mm\:ss"; // Time Format
-
-            if ((int.TryParse(date.Slice(0, 4), out int year) &&
-                 int.TryParse(date.Slice(4, 2), out int month) &&
-                 int.TryParse(date.Slice(6, 2), out int day)) &&
-                 (TimeOnly.TryParseExact(time, timeFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out TimeOnly newTime)))
-            {
-                return new DateTime(year, month, day, newTime.Hour, newTime.Minute, newTime.Second);
-            }
-            return DateTime.Now;
         }
     }
 }
