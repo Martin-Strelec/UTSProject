@@ -3,14 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:UTSProject.Resources.ViewModels"
              x:Class="UTSProject.Resources.Views.ConnectionsPage"
-             Title="Connections">
+             Title="Connections"
+             Loaded="OnPageLoaded">
     <ScrollView>
         <VerticalStackLayout>
             <ActivityIndicator IsRunning="{Binding IndicatorIsVisible}"
                                Margin="10"/>
-            <CollectionView ItemsSource="{Binding Connections}"
-                            IsVisible="{Binding ConnectionsIsVisible}"
-                            >
+            <CollectionView ItemsSource="{Binding Connections}">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical"
                                      VerticalItemSpacing="1"/>
@@ -67,6 +66,13 @@
                                            Grid.Row="0"
                                            Grid.Column="3"
                                            FontSize="18" />
+                                    <Label Text="{Binding TripID}" 
+                                           HorizontalOptions="End"
+                                           Grid.RowSpan="2"
+                                           VerticalOptions="Center"
+                                           Grid.Row="0"
+                                           Grid.Column="2"
+                                           FontSize="18" />
                                 </Grid>
                             </Border>
                         </Grid>
@@ -79,6 +85,6 @@
                     Command="{Binding LoadAnotherCommand}"
                     Text="Load more"/>
         </VerticalStackLayout>
-        
+
     </ScrollView>
 </ContentPage>
