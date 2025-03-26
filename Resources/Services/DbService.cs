@@ -52,4 +52,40 @@ public class DbService
             return stops;
         }
     }
+
+    public async Task<RouteModel> GetRouteDetails(string tripID)
+    {
+        using (SqlConnection conn = new(_connectionString))
+        {
+            RouteModel route = new RouteModel();
+            try
+            {
+                await conn.OpenAsync();
+                using (SqlCommand cmd = new("GetRouteDetails", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ETripID", tripID); // Add input parameter
+
+                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            route = new RouteModel
+                            {
+                                RouteLongName = reader.GetString(0),
+                                RouteShortName = reader.GetString(1),
+                                AgencyName = reader.GetString(2),
+                                AgencyURL = reader.GetString(3),
+                            };
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Database Error (GetRouteDetails): {e}");
+            }
+            return route;
+        }
+    }
 }
