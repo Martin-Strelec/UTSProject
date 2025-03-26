@@ -10,22 +10,9 @@ namespace UTSProject.Resources.Models
     {
         public string Time {  get; set; }
         public string Date { get; set; }
-        private string _vehicleID;
-        public string VehicleID
-        {
-            get => _vehicleID;
-            set
-            {
-                if (value == null)
-                {
-                    _vehicleID = "?";
-                }
-                else
-                {
-                    _vehicleID = value;
-                }
-
-            }
-        }
+        public string RouteShortName { get; set; }
+        public string RouteLongName { get; set; }
+        public string StartPoint { get; set; }
+        public string EndPoint { get; set; }
     }
 }
