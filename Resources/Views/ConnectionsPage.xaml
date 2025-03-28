@@ -55,12 +55,12 @@
                                            VerticalOptions="Center"
                                            FontSize="24"
                                            />
-                                    <Label Text="{Binding SearchedPointDeparture}" 
+                                    <Label Text="{Binding SearchedStop.DepartureTime}" 
                                            HorizontalOptions="End"
                                            Grid.Row="0"
                                            Grid.Column="3"
                                            FontSize="16" />
-                                    <Label Text="{Binding EndPointArrival}" 
+                                    <Label Text="{Binding EndStop.ArrivalTime}" 
                                            HorizontalOptions="End"
                                            Grid.Row="1"
                                            Grid.Column="3"
@@ -74,9 +74,9 @@
                                            FontSize="14">
                                         <Label.FormattedText>
                                             <FormattedString>
-                                                <Span Text="{Binding SearchedPointName}" />
+                                                <Span Text="{Binding SearchedStop.Name}" />
                                                 <Span Text=" - " />
-                                                <Span Text="{Binding EndPointName}" />
+                                                <Span Text="{Binding EndStop.Name}" />
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
