@@ -24,7 +24,7 @@ namespace UTSProject.Resources.ViewModels
         [ObservableProperty]
         private bool _indicatorIsRunning;
 
-        private ObservableCollection<ConnectionDetailsModel> _connectionDetails;
+        private ObservableCollection<ConnectionDetailsModel> _connections;
         private LoadDataService _ld;
 
         public MainViewModel(LoadDataService ld)
@@ -40,7 +40,7 @@ namespace UTSProject.Resources.ViewModels
         async Task Search()
         {
             // Instantiate connections
-            _connectionDetails = new ObservableCollection<ConnectionDetailsModel>();
+            _connections = new ObservableCollection<ConnectionDetailsModel>();
             // Hide the search button
             ButtonIsVisible = false;
             // Show the Loading indicator
@@ -48,12 +48,12 @@ namespace UTSProject.Resources.ViewModels
             //Get the user input
             UserInput input = new UserInput(SelectedDate, SelectedTime);
             //Load the data
-            _connectionDetails = await _ld.AddConnectionsFromDatabase(_connectionDetails, input);
+            _connections = await _ld.AddConnectionsFromDatabase(input, _connections);
             // Navigate to another page
             await Shell.Current.GoToAsync($"{nameof(ConnectionsPage)}",
                 new Dictionary<string, object>
                 {
-                    ["Connections"] = _connectionDetails
+                    ["Connections"] = _connections
                 });
         }
     }
