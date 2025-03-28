@@ -19,26 +19,41 @@ namespace UTSProject.Resources.ViewModels
         private DateTime _selectedDate;
         [ObservableProperty]
         private TimeSpan _selectedTime;
+        [ObservableProperty]
+        private bool _buttonIsVisible;
+        [ObservableProperty]
+        private bool _indicatorIsRunning;
 
-        private readonly NTAService _publicTransportService;
+        private ObservableCollection<ConnectionDetailsModel> _connectionDetails;
+        private LoadDataService _ld;
 
-        public MainViewModel(NTAService publicTransportService)
+        public MainViewModel(LoadDataService ld)
         {
-            _selectedDate = DateTime.Now;
-            _selectedTime = DateTime.Now.TimeOfDay;
-            _publicTransportService = publicTransportService;
+            SelectedDate = DateTime.Now;
+            SelectedTime = DateTime.Now.TimeOfDay;
+            IndicatorIsRunning = false;
+            ButtonIsVisible = true;
+            _ld = ld;
         }
 
         [RelayCommand]
         async Task Search()
         {
+            // Instantiate connections
+            _connectionDetails = new ObservableCollection<ConnectionDetailsModel>();
+            // Hide the search button
+            ButtonIsVisible = false;
+            // Show the Loading indicator
+            IndicatorIsRunning = true;
+            //Get the user input
             UserInput input = new UserInput(SelectedDate, SelectedTime);
-
-            Debug.WriteLine(input);
-            await Shell.Current.GoToAsync($"./{nameof(ConnectionsPage)}",
+            //Load the data
+            _connectionDetails = await _ld.AddConnectionsFromDatabase(_connectionDetails, input);
+            // Navigate to another page
+            await Shell.Current.GoToAsync($"{nameof(ConnectionsPage)}",
                 new Dictionary<string, object>
                 {
-                    ["UserInput"] = input
+                    ["Connections"] = _connectionDetails
                 });
         }
     }
