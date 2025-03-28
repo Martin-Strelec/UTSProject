@@ -5,11 +5,9 @@ namespace UTSProject.Resources.Views;
 
 public partial class ConnectionsPage : ContentPage
 {
-    private ConnectionsViewModel _vm;
     public ConnectionsPage(ConnectionsViewModel vm)
     {
         InitializeComponent();
-        _vm = vm;
         BindingContext = vm;
     }
 
@@ -17,11 +15,11 @@ public partial class ConnectionsPage : ContentPage
     {
         if (e.CurrentSelection.FirstOrDefault() is ConnectionDetailsModel selectedItem)
         {
-            var parameters = new Dictionary<string, object>
-        {
-            { "ConnectionDetails", selectedItem}
-        };
-            await Shell.Current.GoToAsync($"{nameof(ConnectionsPage)}/{nameof(DetailPage)}", parameters);
+            await Shell.Current.GoToAsync($"{nameof(ConnectionsPage)}/{nameof(DetailPage)}",
+                new Dictionary<string, object>
+                {
+                    ["ConnectionDetails"] = selectedItem
+                });
         }
     }
 }
