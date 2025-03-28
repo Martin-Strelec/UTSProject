@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using UTSProject.Resources.Models;
 using UTSProject.Resources.Services;
 using UTSProject.Resources.ViewModels;
 using UTSProject.Resources.Views;
@@ -10,6 +11,7 @@ namespace UTSProject
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+
             builder
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
@@ -33,12 +35,16 @@ namespace UTSProject
             //Connections Page
             builder.Services.AddSingleton<ConnectionsPage>();
             builder.Services.AddSingleton<ConnectionsViewModel>();
+            //Detail Page
+            builder.Services.AddTransient<DetailPage>();
+            builder.Services.AddTransient<DetailViewModel>();
             //GTFSRealTimeData
             builder.Services.AddSingleton<NTAService>();
             //NTALocalDatabase 
             builder.Services.AddSingleton<DbService>();
             //LoadDataService
             builder.Services.AddSingleton<LoadDataService>();
+            
 #endif
 
             return builder.Build();
