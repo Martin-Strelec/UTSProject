@@ -38,7 +38,7 @@ namespace UTSProject.Resources.Services
             try
             {
                 //Request header
-                _client.DefaultRequestHeaders.Add("x-api-key", Environment.GetEnvironmentVariable("api_key"));
+                _client.DefaultRequestHeaders.Add("x-api-key", Environment.GetEnvironmentVariable(apiKey));
 
                 //Request method
                 HttpResponseMessage response = await _client.GetAsync(apiUri);
