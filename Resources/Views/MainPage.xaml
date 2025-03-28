@@ -2,38 +2,42 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="UTSProject.Resources.Views.MainPage"
-             Title="Connections">
-    <ScrollView>
-        <StackLayout x:Name="MainStack" Orientation="Vertical" Padding="20" Spacing="20" BackgroundColor="{StaticResource bgColor}">
-            <Grid ColumnDefinitions="*,0.25*,*">
-                <Border Padding="5" BackgroundColor="{StaticResource bgColor}" Grid.Column="0">
-                    <DatePicker
-                        FontSize="24"
+             Title="Connections"
+             Loaded="OnPageLoaded">
+    <ScrollView WidthRequest="400">
+        <StackLayout x:Name="MainStack" Orientation="Vertical" Padding="20" Spacing="20">
+            <VerticalStackLayout>
+                <Label Text="ATU Sligo Public Transport App"
+                       Style="{StaticResource LabelHeader}"/>
+                <Label Text="Select Time"
+                       Style="{StaticResource LabelHint}"/>
+                <DatePicker
+                        FontSize="20"
+                        Margin="10"
+                        WidthRequest="400"
+                        HeightRequest="50"
                         VerticalOptions="Center"
                         HorizontalOptions="Center"
                         Date="{Binding SelectedDate, Mode=TwoWay}"
                         />
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="10"/>
-                    </Border.StrokeShape>
-                </Border>
-                <Border Padding="5"  BackgroundColor="{StaticResource bgColor}" Grid.Column="2">
-                    <TimePicker   
-                        FontSize="24"
+                <Label Text="Select Date"
+                       Style="{StaticResource LabelHint}"/>
+                <TimePicker   
+                        FontSize="18"
+                        Margin="10"
+                        WidthRequest="400"
                         VerticalOptions="Center"
                         HorizontalOptions="Center"
                         Time="{Binding SelectedTime, Mode=TwoWay}"/>
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="10"/>
-                    </Border.StrokeShape>
-                </Border>
-            </Grid>
-
+            </VerticalStackLayout>
+            <ActivityIndicator IsRunning="{Binding IndicatorIsRunning}"
+            Margin="10"/>
             <Button Margin="10"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     Style="{StaticResource DefaultButton}"
                     Command="{Binding SearchCommand}"
+                    IsVisible="{Binding ButtonIsVisible}"
                     Text="Search" 
                     WidthRequest="200"
                     />
