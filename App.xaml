@@ -18,9 +18,15 @@
             <x:Double x:Key="mpDefault">10</x:Double>
 
             <Style x:Key="LabelHeader" TargetType="Label">
-                <Setter Property="FontSize" Value="24"/>
-                <Setter Property="Margin" Value="24"/>
+                <Setter Property="FontSize" Value="32"/>
+                <Setter Property="Margin" Value="10,0,10,35"/>
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
                 <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
+            <Style x:Key="LabelHint" TargetType="Label">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="HorizontalOptions" Value="Start"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
             </Style>
             <Style x:Key="DefaultButton" TargetType="Button">
