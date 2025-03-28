@@ -122,4 +122,107 @@ public class DbService
             return route;
         }
     }
+
+    public async Task<List<TripModel>> GetTripsByStopAndTime(string stopName, string time)
+    {
+        using (SqlConnection conn = new(_connectionString))
+        {
+            var trips = new List<TripModel>();
+            try
+            {
+                await conn.OpenAsync();
+                using (SqlCommand cmd = new("GetTripsByStopAndTime", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@EStopName", stopName); // Add input parameter
+                    cmd.Parameters.AddWithValue("@EStopTime", time); // Add input parameter
+
+                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            trips.Add(new TripModel
+                            {
+                                TripID = reader.GetString(0)
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Database Error (GetRouteDetails): {e}");
+            }
+            return trips;
+        }
+    }
+
+    public async Task<List<TripModel>> GetTripsByStopTimeDay(string day,string stopName, string time)
+    {
+        using (SqlConnection conn = new(_connectionString))
+        {
+            var trips = new List<TripModel>();
+            try
+            {
+                await conn.OpenAsync();
+                using (SqlCommand cmd = new("GetTripsByStop_Time_Day", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@EDay", day.ToLower()); // Add input parameter
+                    cmd.Parameters.AddWithValue("@EStopName", stopName); // Add input parameter
+                    cmd.Parameters.AddWithValue("@EStopTime", time); // Add input parameter
+
+                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            trips.Add(new TripModel
+                            {
+                                TripID = reader.GetString(0)
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Database Error (GetRouteDetails): {e}");
+            }
+            return trips;
+        }
+    }
+
+    public async Task<List<TripModel>> GetRoutesByStopAndTime(string stopName, string time)
+    {
+        using (SqlConnection conn = new(_connectionString))
+        {
+            var trips = new List<TripModel>();
+            try
+            {
+                await conn.OpenAsync();
+                using (SqlCommand cmd = new("GetTripsByStopAndTime", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@EStopName", stopName); // Add input parameter
+                    cmd.Parameters.AddWithValue("@EStopTime", time); // Add input parameter
+
+                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            trips.Add(new TripModel
+                            {
+                                TripID = reader.GetString(0)
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Database Error (GetRouteDetails): {e}");
+            }
+            return trips;
+        }
+    }
 }
