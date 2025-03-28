@@ -12,21 +12,6 @@ namespace UTSProject.Resources.ViewModels
     public partial class ConnectionsViewModel : ObservableObject
     {
         [ObservableProperty]
-        private string _routeShortName;
-
-        [ObservableProperty]
-        private string _searchedPointDeparture;
-
-        [ObservableProperty]
-        private string _endPointArrival;
-
-        [ObservableProperty]
-        private string _endPointName;
-
-        [ObservableProperty]
-        private string _searchedPointName;
-
-        [ObservableProperty]
         private ObservableCollection<ConnectionDetailsModel> _connections;
 
         [ObservableProperty]
@@ -34,16 +19,15 @@ namespace UTSProject.Resources.ViewModels
 
         [ObservableProperty]
         private bool _connectionsIsVisible;
+
         [ObservableProperty]
         private bool _buttonIsVisible;
 
         private LoadDataService _ld;
-        private DbService _db;
 
-        public ConnectionsViewModel(LoadDataService ld, DbService db)
+        public ConnectionsViewModel(LoadDataService ld)
         {
             _ld = ld;
-            _db = db;
             ConnectionsIsVisible = false;
             ButtonIsVisible = true;
         }
@@ -51,12 +35,10 @@ namespace UTSProject.Resources.ViewModels
         [RelayCommand]
         async Task LoadAnother()
         {
-            // Clear the Collection
-            Connections.Clear();
             // Hide the button
             ButtonIsVisible = false;
             // Add data to ObservableColletion
-            //await _ld.AddConnectionsFromDatabase(_connections);
+            Connections =  await _ld.LoadAnother(Connections);
             // Hide the button
             ButtonIsVisible = true;
         }
