@@ -3,20 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:UTSProject.Resources.ViewModels"
              x:Class="UTSProject.Resources.Views.ConnectionsPage"
-             Title="Connections"
-             Loaded="OnPageLoaded">
+             Title="Connections">
     <ScrollView>
-        <VerticalStackLayout>
-            <ActivityIndicator IsRunning="{Binding IndicatorIsVisible}"
-                               Margin="10"/>
-            <CollectionView ItemsSource="{Binding Connections}">
+        <VerticalStackLayout WidthRequest="500">
+            <Label Text="Connections"
+                   Style="{StaticResource LabelHeader}"/>
+            <CollectionView ItemsSource="{Binding Connections}" SelectionMode="Single" SelectionChanged="OnItemSelected">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical"
                                      VerticalItemSpacing="1"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid WidthRequest="500">
+                        <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
@@ -56,23 +55,31 @@
                                            VerticalOptions="Center"
                                            FontSize="24"
                                            />
-                                    <Label Text="{Binding Date}" 
-                                           HorizontalOptions="End"
-                                           Grid.Row="1"
-                                           Grid.Column="3"
-                                           FontSize="16" />
-                                    <Label Text="{Binding Time}" 
+                                    <Label Text="{Binding SearchedPointDeparture}" 
                                            HorizontalOptions="End"
                                            Grid.Row="0"
                                            Grid.Column="3"
+                                           FontSize="16" />
+                                    <Label Text="{Binding EndPointArrival}" 
+                                           HorizontalOptions="End"
+                                           Grid.Row="1"
+                                           Grid.Column="3"
                                            FontSize="18" />
-                                    <Label Text="{Binding RouteLongName}" 
+                                    <Label Text="{Binding SearchedPointName, StringFormat='{0} - {1}', Mode=OneWay}"                         
                                            HorizontalOptions="Start"
                                            Grid.RowSpan="2"
                                            VerticalOptions="Center"
                                            Grid.Row="0"
                                            Grid.Column="2"
-                                           FontSize="14" />
+                                           FontSize="14">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding SearchedPointName}" />
+                                                <Span Text=" - " />
+                                                <Span Text="{Binding EndPointName}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
                                 </Grid>
                             </Border>
                         </Grid>
