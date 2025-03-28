@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Azure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Maui.Graphics.Text;
 using UTSProject.Resources.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace UTSProject.Resources.Services
 {
@@ -16,10 +19,14 @@ namespace UTSProject.Resources.Services
         private DbService _db;
         private int _paginationStart;
         private int _paginationStep;
+        private List<TripModel> _trips;
+        private UserInput _userInput;
+        private string _stopName;
         public LoadDataService(NTAService nta, DbService db)
         {
             _nta = nta;
             _db = db;
+            _stopName = "ATU Sligo";
             _paginationStart = 0;
             _paginationStep = 25;
         }
@@ -78,12 +85,10 @@ namespace UTSProject.Resources.Services
 
                     connections.Add(new ConnectionDetailsModel
                     {
-                        Date = entity.TripUpdate.Trip.StartDate,
-                        Time = entity.TripUpdate.Trip.StartTime,
+                        Date = DateTime.Parse(entity.TripUpdate.Trip.StartDate),
+                        Time = TimeSpan.Parse(entity.TripUpdate.Trip.StartTime),
                         RouteShortName = dbRouteDetails.RouteShortName,
                         RouteLongName = dbRouteDetails.RouteLongName,
-                        StartPoint = dbStops[0],
-                        EndPoint = dbStops[dbStops.Count - 1],
                         Stops = dbStops
                     });
                 }
@@ -95,18 +100,24 @@ namespace UTSProject.Resources.Services
             return connections;
         }
 
-        public async Task<ObservableCollection<ConnectionDetailsModel>> AddConnectionsFromDatabase(ObservableCollection<ConnectionDetailsModel> connections, UserInput input)
+        public async Task<ObservableCollection<ConnectionDetailsModel>> AddConnectionsFromDatabase(UserInput input, ObservableCollection<ConnectionDetailsModel> connections)
         {
-            string stopName = "ATU Sligo";
+            // Clear the List
+            if (_trips != null)
+            {
+                _trips.Clear();
+            }
+            // Store the user input
+            _userInput = input;
 
-            List<TripModel> trips = await _db.GetTripsByStopTimeDay(input.Date.DayOfWeek.ToString(),stopName, input.Time.ToString());
+            _trips = await _db.GetTripsByStopTimeDay(input.Date.DayOfWeek.ToString(),_stopName, input.Time.ToString());
 
-            //List<TripModel> test = new List<TripModel>();
-            //test.Add(trips[0]);
-            //test.Add(trips[1]);
+            return await InitializeConnections(_stopName, connections);
+        }
 
-
-            foreach (var t in trips.Skip(_paginationStart).Take(_paginationStep))
+        private async Task<ObservableCollection<ConnectionDetailsModel>> InitializeConnections(string stopName, ObservableCollection<ConnectionDetailsModel> connections)
+        {
+            foreach (var t in _trips.Skip(_paginationStart).Take(_paginationStep))
             {
                 string tripID = t.TripID;
 
@@ -134,15 +145,19 @@ namespace UTSProject.Resources.Services
                         continue; // Skip this iteration
                     }
 
-                    connections.Add(new ConnectionDetailsModel
+                    if (dbStops[dbStops.Count - 1].Name != stopName)
                     {
-                        RouteShortName = dbRouteDetails.RouteShortName,
-                        RouteLongName = dbRouteDetails.RouteLongName,
-                        StartPoint = dbStops[0],
-                        SearchedPoint = result,
-                        EndPoint = dbStops[dbStops.Count - 1],
-                        Stops = dbStops
-                    });
+                        connections.Add(new ConnectionDetailsModel
+                        {
+                            Date = _userInput.Date,
+                            Time = _userInput.Time,
+                            RouteShortName = dbRouteDetails.RouteShortName,
+                            RouteLongName = dbRouteDetails.RouteLongName,
+                            SearchedStop = result,
+                            EndStop = dbStops[dbStops.Count - 1],
+                            Stops = dbStops
+                        });
+                    }
                 }
                 catch (Exception e)
                 {
@@ -152,6 +167,12 @@ namespace UTSProject.Resources.Services
             // Incrementing pagination
             _paginationStart += _paginationStep;
             return connections;
-        }
+        } 
+
+
+        public async Task<ObservableCollection<ConnectionDetailsModel>> LoadAnother(ObservableCollection<ConnectionDetailsModel> connections)
+        {
+            return await InitializeConnections(_stopName, connections);
+        } 
     }
 }
