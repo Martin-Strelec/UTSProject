@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using UTSProject.Resources.Models;
 using System.Globalization;
 using System.Diagnostics;
+using System.Collections.ObjectModel;
 
 public class DbService
 {
@@ -50,6 +51,39 @@ public class DbService
                 Debug.WriteLine($"Database Error (GetRouteDetails): {e}");
             }
             return stops;
+        }
+    }
+
+    public async Task<List<TripModel>> GetAllTripsForStop(string stopName)
+    {
+        using (SqlConnection conn = new(_connectionString))
+        {
+            var trips = new List<TripModel>();
+            try
+            {
+                await conn.OpenAsync();
+                using (SqlCommand cmd = new("GetAllTripsForStopName", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@EStopName", stopName); // Add input parameter
+
+                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            trips.Add(new TripModel
+                            {
+                                TripID = reader.GetString(0)
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Database Error (GetRouteDetails): {e}");
+            }
+            return trips;
         }
     }
 
