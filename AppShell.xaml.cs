@@ -9,9 +9,10 @@ namespace UTSProject
             InitializeComponent();
 
             //Registering routes
-            Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
-            Routing.RegisterRoute(nameof(UserPage), typeof(UserPage));
+            //Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
+            //Routing.RegisterRoute(nameof(UserPage), typeof(UserPage));
             Routing.RegisterRoute(nameof(ConnectionsPage), typeof(ConnectionsPage));
+            Routing.RegisterRoute(nameof(DetailPage), typeof(DetailPage));
         }
     }
 }
