@@ -25,16 +25,20 @@ namespace UTSProject
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MainViewModel>();
             //User Page
-            builder.Services.AddSingleton<UserPage>();
-            builder.Services.AddSingleton<UserViewModel>();
+            builder.Services.AddTransient<UserPage>();
+            builder.Services.AddTransient<UserViewModel>();
             //Tickets Page
-            builder.Services.AddSingleton<TicketsPage>();
-            builder.Services.AddSingleton<TicketsViewModel>();
+            builder.Services.AddTransient<TicketsPage>();
+            builder.Services.AddTransient<TicketsViewModel>();
             //Connections Page
             builder.Services.AddSingleton<ConnectionsPage>();
             builder.Services.AddSingleton<ConnectionsViewModel>();
             //GTFSRealTimeData
             builder.Services.AddSingleton<NTAService>();
+            //NTALocalDatabase 
+            builder.Services.AddSingleton<DbService>();
+            //LoadDataService
+            builder.Services.AddSingleton<LoadDataService>();
 #endif
 
             return builder.Build();
