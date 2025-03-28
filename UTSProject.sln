@@ -5,6 +5,8 @@ VisualStudioVersion = 17.12.35728.132
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UTSProject", "UTSProject.csproj", "{38539A2E-2CC9-4D25-A3A1-EC1C8BAA30F5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "..\ConsoleApp1\ConsoleApp1.csproj", "{3CB77E43-408B-43A1-8439-4E257DF801CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -16,8 +18,15 @@ Global
 		{38539A2E-2CC9-4D25-A3A1-EC1C8BAA30F5}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{38539A2E-2CC9-4D25-A3A1-EC1C8BAA30F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38539A2E-2CC9-4D25-A3A1-EC1C8BAA30F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CB77E43-408B-43A1-8439-4E257DF801CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CB77E43-408B-43A1-8439-4E257DF801CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CB77E43-408B-43A1-8439-4E257DF801CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CB77E43-408B-43A1-8439-4E257DF801CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4B614812-1B70-4117-B801-21A5AF7B51F2}
 	EndGlobalSection
 EndGlobal
