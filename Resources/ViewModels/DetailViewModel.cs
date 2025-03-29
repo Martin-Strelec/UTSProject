@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using UTSProject.Resources.Models;
 using UTSProject.Resources.Services;
 using UTSProject.Resources.Views;
@@ -15,5 +16,8 @@ namespace UTSProject.Resources.ViewModels
     {
         [ObservableProperty]
         private ConnectionDetailsModel _connectionDetails;
+
+        [ObservableProperty]
+        private bool _isNotSaved;
     }
 }
