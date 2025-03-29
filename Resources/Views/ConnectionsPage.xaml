@@ -5,10 +5,12 @@
              x:Class="UTSProject.Resources.Views.ConnectionsPage"
              Title="Connections">
     <ScrollView>
-        <VerticalStackLayout WidthRequest="500">
+        <VerticalStackLayout WidthRequest="{StaticResource DefaultWidth}">
             <Label Text="Connections"
                    Style="{StaticResource LabelHeader}"/>
-            <CollectionView ItemsSource="{Binding Connections}" SelectionMode="Single" SelectionChanged="OnItemSelected">
+            <CollectionView ItemsSource="{Binding Connections}" 
+                            SelectionMode="Single" 
+                            SelectionChanged="OnItemSelected">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical"
                                      VerticalItemSpacing="1"/>
@@ -55,16 +57,28 @@
                                            VerticalOptions="Center"
                                            FontSize="24"
                                            />
-                                    <Label Text="{Binding SearchedStop.DepartureTime}" 
-                                           HorizontalOptions="End"
+                                    <Label HorizontalOptions="End"
                                            Grid.Row="0"
                                            Grid.Column="3"
-                                           FontSize="16" />
-                                    <Label Text="{Binding EndStop.ArrivalTime}" 
-                                           HorizontalOptions="End"
+                                           FontSize="16">
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="{}{0}:{1:00}">
+                                                <Binding Path="SearchedStop.DepartureTime.Hours"/>
+                                                <Binding Path="SearchedStop.DepartureTime.Minutes"/>
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                    <Label HorizontalOptions="End"
                                            Grid.Row="1"
                                            Grid.Column="3"
-                                           FontSize="18" />
+                                           FontSize="18" >
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="{}{0}:{1:00}">
+                                                <Binding Path="SearchedStop.DepartureTime.Hours"/>
+                                                <Binding Path="SearchedStop.DepartureTime.Minutes"/>
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
                                     <Label Text="{Binding SearchedPointName, StringFormat='{0} - {1}', Mode=OneWay}"                         
                                            HorizontalOptions="Start"
                                            Grid.RowSpan="2"
