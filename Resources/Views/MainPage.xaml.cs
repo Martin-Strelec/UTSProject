@@ -14,6 +14,7 @@ public partial class MainPage : ContentPage
 
     private async void OnPageLoaded(object sender, EventArgs e)
     {
+		_vm.SelectedTime = DateTime.Now.TimeOfDay;
 		_vm.ButtonIsVisible = true;
 		_vm.IndicatorIsRunning = false;
     }
