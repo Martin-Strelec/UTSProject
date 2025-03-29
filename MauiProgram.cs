@@ -44,7 +44,9 @@ namespace UTSProject
             builder.Services.AddSingleton<DbService>();
             //LoadDataService
             builder.Services.AddSingleton<LoadDataService>();
-            
+            //SavedConnectionsService
+            builder.Services.AddSingleton<SavedConnectionsService>();
+
 #endif
 
             return builder.Build();
