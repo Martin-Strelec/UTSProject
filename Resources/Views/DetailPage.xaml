@@ -5,30 +5,100 @@
              Shell.PresentationMode="Animated"
              Shell.NavBarHasShadow="True"
              Title="DetailPage">
-    <VerticalStackLayout WidthRequest="500" Margin="10">
-        <Label Text="Connection Details"
-               Style="{StaticResource LabelHeader}"/>
+    <VerticalStackLayout WidthRequest="{StaticResource DefaultWidth}" Margin="25">
+        <HorizontalStackLayout>
+            <Label Style="{StaticResource LabelHeader}">
+                <Label.Text>
+                    <MultiBinding StringFormat="{}Route {0}">
+                        <Binding Path="ConnectionDetails.RouteShortName"/>
+                        <Binding Path="ConnectionDetails.Date.Month"/>
+                        <Binding Path="ConnectionDetails.Date.Day"/>
+                        <Binding Path="ConnectionDetails.Date.Year"/>
+                    </MultiBinding>
+                </Label.Text>
+            </Label>
+            <Label Style="{StaticResource LabelHint}"
+                   Margin="10,0,0,0">
+                <Label.Text>
+                    <MultiBinding StringFormat="{}{0}/{1}/{2}">
+                        <Binding Path="ConnectionDetails.Date.Month"/>
+                        <Binding Path="ConnectionDetails.Date.Day"/>
+                        <Binding Path="ConnectionDetails.Date.Year"/>
+                    </MultiBinding>
+                </Label.Text>
+            </Label>
+            <ImageButton Source="boxicon.png"
+                    Clicked="ImageButton_Clicked"
+                    WidthRequest="20"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center" />
+        </HorizontalStackLayout>
+        
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="3*"/>
                 <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2.5*"/>
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <HorizontalStackLayout HorizontalOptions="Start">
-                <Image Source="busicon.png"
-                       HorizontalOptions="Start"
-                       VerticalOptions="Center"
-                       WidthRequest="50"/>
-                <Label Text="{Binding ConnectionDetails.RouteShortName}"
-                       Style="{StaticResource LabelStandard}"
-                       Grid.Row="0"
-                       Grid.Column="0"
-                       />
-            </HorizontalStackLayout>
-            
+            <Label Text="Stops"
+                   Style="{StaticResource LabelSubHeader}"                  
+                   Grid.Row="1"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   HorizontalTextAlignment="Center"
+                   />
+            <Border Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2">
+                <ListView ItemsSource="{Binding ConnectionDetails.Stops}"
+                      SeparatorColor="Green"
+                      SeparatorVisibility="Default"
+                      HeightRequest="250">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid ColumnDefinitions="2*,*,*"
+                                      Margin="10">
+                                    <Label Text="{Binding Name}"
+                                           Grid.Column="0"
+                                           Style="{StaticResource LabelHint}"/>
+                                    <Label Grid.Column="2"
+                                           HorizontalOptions="End"
+                                           Style="{StaticResource LabelHint}">
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="{}{0}:{1:00}">
+                                                <Binding Path="DepartureTime.Hours"/>
+                                                <Binding Path="DepartureTime.Minutes"/>
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Border>
+            <VerticalStackLayout Grid.Row="1"
+                                 Grid.Column="2"
+                                 Grid.RowSpan="2"
+                                 VerticalOptions="Center">
+                <Label Style="{StaticResource LabelStandard}"
+                       Grid.Column="2"
+                       Grid.Row="1">
+                    <Label.Text>
+                        <MultiBinding StringFormat="{}{0} - {1}:{2:00}">
+                            <Binding Path="ConnectionDetails.SearchedStop.Name"/>
+                            <Binding Path="ConnectionDetails.SearchedStop.DepartureTime.Hours"/>
+                            <Binding Path="ConnectionDetails.SearchedStop.DepartureTime.Minutes"/>
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+            </VerticalStackLayout>
         </Grid>
     </VerticalStackLayout>
 </ContentPage>
