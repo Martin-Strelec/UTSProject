@@ -150,7 +150,8 @@ namespace UTSProject.Resources.Services
                         connections.Add(new ConnectionDetailsModel
                         {
                             Date = _userInput.Date,
-                            Time = _userInput.Time,
+                            Time = _userInput.Date.TimeOfDay,
+                            IsNotSaved = true,
                             RouteShortName = dbRouteDetails.RouteShortName,
                             RouteLongName = dbRouteDetails.RouteLongName,
                             SearchedStop = result,
