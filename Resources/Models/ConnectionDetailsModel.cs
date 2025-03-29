@@ -12,6 +12,7 @@ namespace UTSProject.Resources.Models
         public DateTime Date { get; set; }
         public string RouteShortName { get; set; }
         public string RouteLongName { get; set; }
+        public bool IsNotSaved { get; set; }
         public StopModel SearchedStop { get; set; }
         public StopModel EndStop { get; set; }
         public List<StopModel> Stops { get; set; }
