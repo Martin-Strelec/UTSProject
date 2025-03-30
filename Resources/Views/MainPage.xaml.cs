@@ -19,5 +19,5 @@ public partial class MainPage : ContentPage
 		_vm.IndicatorIsRunning = false;
     }
 
-
+ 
 }
