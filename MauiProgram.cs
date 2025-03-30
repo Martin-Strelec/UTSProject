@@ -26,12 +26,15 @@ namespace UTSProject
             //Main Page
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MainViewModel>();
-            //User Page
-            builder.Services.AddTransient<UserPage>();
-            builder.Services.AddTransient<UserViewModel>();
-            //Tickets Page
-            builder.Services.AddTransient<TicketsPage>();
-            builder.Services.AddTransient<TicketsViewModel>();
+            // Saved Page
+            builder.Services.AddSingleton<SavedConnectionsPage>();
+            builder.Services.AddSingleton<SavedConnectionsViewModel>();
+            ////User Page
+            //builder.Services.AddTransient<UserPage>();
+            //builder.Services.AddTransient<UserViewModel>();
+            ////Tickets Page
+            //builder.Services.AddTransient<TicketsPage>();
+            //builder.Services.AddTransient<TicketsViewModel>();
             //Connections Page
             builder.Services.AddSingleton<ConnectionsPage>();
             builder.Services.AddSingleton<ConnectionsViewModel>();
