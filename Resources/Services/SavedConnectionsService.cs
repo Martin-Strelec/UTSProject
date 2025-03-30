@@ -11,11 +11,11 @@ namespace UTSProject.Resources.Services
 {
     public class SavedConnectionsService
     {
-        private List<ConnectionDetailsModel> _connections { get; set; }
+        private ObservableCollection<ConnectionDetailsModel> _connections { get; set; }
 
         public SavedConnectionsService()
         {
-            _connections = new List<ConnectionDetailsModel>();
+            _connections = new ObservableCollection<ConnectionDetailsModel>();
         }
 
         public void SaveConnection (ConnectionDetailsModel cd)
@@ -25,13 +25,17 @@ namespace UTSProject.Resources.Services
                 _connections.Add(cd);
             }
         }
-        public List<ConnectionDetailsModel> GetConnections ()
+        public ObservableCollection<ConnectionDetailsModel> GetConnections ()
         {
             return _connections;
         }
 
-        public void RemoveFromConnections()
+        public void RemoveFromConnections(ConnectionDetailsModel cd)
         {
+            if (_connections != null)
+            {
+                _connections.Remove(cd);
+            }
         }
     }
 }
