@@ -12,35 +12,32 @@
 
             <Color x:Key="fgColor">#3D8D7A</Color>
             <Color x:Key="bgColor">#FBFFE4</Color>
-            <Color x:Key="lightColor"></Color>
+            <Color x:Key="lightColor">#6E6E6E</Color>
             
             <x:Double x:Key="fsHeader">24</x:Double>
             <x:Double x:Key="fsDefault">12</x:Double>
             <x:Double x:Key="mpDefault">10</x:Double>
             <x:Double x:Key="DefaultWidth">700</x:Double>
+            <x:Double x:Key="DefaultMargin">10</x:Double>
 
             <Style x:Key="LabelHeader" TargetType="Label">
                 <Setter Property="FontSize" Value="32"/>
-                <Setter Property="Margin" Value="10,0,10,35"/>
                 <Setter Property="HorizontalTextAlignment" Value="Center"/>
                 <Setter Property="HorizontalOptions" Value="Center"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
             </Style>
             <Style x:Key="LabelSubHeader" TargetType="Label">
                 <Setter Property="FontSize" Value="24"/>
-                <Setter Property="Margin" Value="10,0,10,35"/>
                 <Setter Property="HorizontalTextAlignment" Value="Center"/>
                 <Setter Property="HorizontalOptions" Value="Center"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
             </Style>
             <Style x:Key="LabelStandard" TargetType="Label">
-                <Setter Property="FontSize" Value="18"/>
-                <Setter Property="Margin" Value="10,0,10,35"/>
-                <Setter Property="HorizontalTextAlignment" Value="Center"/>
-                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="FontSize" Value="12"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
             </Style>
             <Style x:Key="LabelHint" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource lightColor}"/>
                 <Setter Property="FontSize" Value="14"/>
                 <Setter Property="HorizontalOptions" Value="Start"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
