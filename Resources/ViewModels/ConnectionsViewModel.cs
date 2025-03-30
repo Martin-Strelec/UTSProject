@@ -38,7 +38,7 @@ namespace UTSProject.Resources.ViewModels
             // Hide the button
             ButtonIsVisible = false;
             // Add data to ObservableColletion
-            Connections =  await _ld.LoadAnother(Connections);
+            Connections =  await _ld.LoadAnother();
             // Hide the button
             ButtonIsVisible = true;
         }
