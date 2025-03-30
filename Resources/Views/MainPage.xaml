@@ -2,13 +2,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="UTSProject.Resources.Views.MainPage"
-             Title="Connections"
+             Title="Search"
              Loaded="OnPageLoaded">
     <ScrollView WidthRequest="400">
         <StackLayout x:Name="MainStack" Orientation="Vertical" Padding="20" Spacing="20">
             <VerticalStackLayout>
                 <Label Text="ATU Sligo Public Transport App"
-                       Style="{StaticResource LabelHeader}"/>
+                       Style="{StaticResource LabelHeader}"
+                       Margin="0,0,0,20"/>
                 <Label Text="Select Time"
                        Style="{StaticResource LabelHint}"/>
                 <DatePicker
@@ -30,8 +31,6 @@
                         HorizontalOptions="Center"
                         Time="{Binding SelectedTime, Mode=TwoWay}"/>
             </VerticalStackLayout>
-            <ActivityIndicator IsRunning="{Binding IndicatorIsRunning}"
-            Margin="10"/>
             <Button Margin="10"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
@@ -39,8 +38,10 @@
                     Command="{Binding SearchCommand}"
                     IsVisible="{Binding ButtonIsVisible}"
                     Text="Search" 
-                    WidthRequest="200"
-                    />
+                    WidthRequest="200"/>
+            <ActivityIndicator IsRunning="{Binding IndicatorIsRunning}"
+            Margin="10"/>
+            
             <!--<Label Text="Traffic News" FontSize="Header"/>
             <ScrollView Padding="15" HeightRequest="300" BackgroundColor="pink">
                 <VerticalStackLayout>
