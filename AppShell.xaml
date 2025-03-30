@@ -4,7 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:UTSProject.Resources.Views"
-    Shell.FlyoutBehavior="Disabled"
+    Shell.FlyoutBehavior="Flyout"
     Shell.ForegroundColor="{StaticResource bgColor}"
     Shell.BackgroundColor="{StaticResource fgColor}"
     Shell.TitleColor="{StaticResource bgColor}"
@@ -14,23 +14,18 @@
     Shell.TabBarUnselectedColor="#B3D8A8"
     Title="UTSProject">
 
-    <!--<FlyoutItem Title="Home" Icon="houseicon.svg">
-        <ShellContent
-                Title="Home"
-                ContentTemplate="{DataTemplate local:MainPage}"
-                Route="MainPage" 
-                Icon="houseicon.svg"/>
+    <FlyoutItem Title="Search" Icon="searchicon.png">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate local:MainPage}"/>
+        </Tab>
     </FlyoutItem>
-    
-    <FlyoutItem Title="User" Icon="usericon.svg">
-        <ShellContent
-                Title="User"
-                ContentTemplate="{DataTemplate local:UserPage}"
-                Route="UserPage"
-                Icon="usericon.svg"/>
-    </FlyoutItem>-->
+    <FlyoutItem Title="Saved" Icon="saveicon.png">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate local:SavedConnectionsPage}"/>
+        </Tab>
+    </FlyoutItem>
 
-    <TabBar>
+    <!--<TabBar>
         <Tab Title="Search" Icon="searchicon.png">
             <ShellContent
                 Title="Home"
@@ -38,21 +33,14 @@
                 Route="MainPage" 
                 />
         </Tab>
-        <Tab Title="User" Icon="usericon.png">
+        <Tab Title="Saved" Icon="boxicon.png">
             <ShellContent
-                Title="User"
-                ContentTemplate="{DataTemplate local:UserPage}"
-                Route="UserPage"
+                Title="Saved"
+                ContentTemplate="{DataTemplate local:SavedConnectionsPage}"
+                Route="SavedConnectionsPage"
                 />
         </Tab>
-        <Tab Title="Tickets" Icon="ticketicon.png">
-            <ShellContent
-                Title="Tickets"
-                ContentTemplate="{DataTemplate local:TicketsPage}"
-                Route="UserPage"
-                />
-        </Tab>
-    </TabBar>
+    </TabBar>-->
     
     
 </Shell>
