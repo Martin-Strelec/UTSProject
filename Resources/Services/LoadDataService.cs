@@ -17,15 +17,18 @@ namespace UTSProject.Resources.Services
     {
         private NTAService _nta;
         private DbService _db;
-        private int _paginationStart;
-        private int _paginationStep;
         private List<TripModel> _trips;
         private UserInput _userInput;
+        private int _paginationStart;
+        private int _paginationStep;
         private string _stopName;
+
+        public ObservableCollection<ConnectionDetailsModel> Connections;
         public LoadDataService(NTAService nta, DbService db)
         {
             _nta = nta;
             _db = db;
+            Connections = new ObservableCollection<ConnectionDetailsModel>();
             _stopName = "ATU Sligo";
             _paginationStart = 0;
             _paginationStep = 25;
@@ -100,8 +103,12 @@ namespace UTSProject.Resources.Services
             return connections;
         }
 
-        public async Task<ObservableCollection<ConnectionDetailsModel>> AddConnectionsFromDatabase(UserInput input, ObservableCollection<ConnectionDetailsModel> connections)
+        public async Task<bool> AddConnectionsFromDatabase(UserInput input)
         {
+            // Reset pagination
+            _paginationStart = 0;
+            // Clear the Connections
+            Connections.Clear();
             // Clear the List
             if (_trips != null)
             {
@@ -112,7 +119,9 @@ namespace UTSProject.Resources.Services
 
             _trips = await _db.GetTripsByStopTimeDay(input.Date.DayOfWeek.ToString(),_stopName, input.Time.ToString());
 
-            return await InitializeConnections(_stopName, connections);
+            Connections = await InitializeConnections(_stopName, Connections);
+
+            return true;
         }
 
         private async Task<ObservableCollection<ConnectionDetailsModel>> InitializeConnections(string stopName, ObservableCollection<ConnectionDetailsModel> connections)
@@ -171,9 +180,9 @@ namespace UTSProject.Resources.Services
         } 
 
 
-        public async Task<ObservableCollection<ConnectionDetailsModel>> LoadAnother(ObservableCollection<ConnectionDetailsModel> connections)
+        public async Task<ObservableCollection<ConnectionDetailsModel>> LoadAnother()
         {
-            return await InitializeConnections(_stopName, connections);
+            return await InitializeConnections(_stopName, Connections);
         } 
     }
 }
