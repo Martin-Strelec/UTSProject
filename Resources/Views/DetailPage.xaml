@@ -4,10 +4,21 @@
              x:Class="UTSProject.Resources.Views.DetailPage"
              Shell.PresentationMode="Animated"
              Shell.NavBarHasShadow="True"
+             Loaded="DetailPage_Loaded"
              Title="DetailPage">
     <VerticalStackLayout WidthRequest="{StaticResource DefaultWidth}" Margin="25">
         <HorizontalStackLayout>
-            <Label Style="{StaticResource LabelHeader}">
+            
+            
+        </HorizontalStackLayout>
+
+        <Grid RowDefinitions="Auto,0.5*,3*"
+              ColumnDefinitions="Auto,*,*">
+            <!--Route Short Name-->
+            <Label Style="{StaticResource LabelHeader}"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   VerticalOptions="End">
                 <Label.Text>
                     <MultiBinding StringFormat="{}Route {0}">
                         <Binding Path="ConnectionDetails.RouteShortName"/>
@@ -17,8 +28,14 @@
                     </MultiBinding>
                 </Label.Text>
             </Label>
+            <!--Searched Date-->
             <Label Style="{StaticResource LabelHint}"
-                   Margin="10,0,0,0">
+                   HorizontalOptions="Start"
+                   VerticalOptions="End"
+                   Margin="10,0,0,0"
+                   HeightRequest="20"
+                   Grid.Row="0"
+                   Grid.Column="1">
                 <Label.Text>
                     <MultiBinding StringFormat="{}{0}/{1}/{2}">
                         <Binding Path="ConnectionDetails.Date.Month"/>
@@ -27,26 +44,29 @@
                     </MultiBinding>
                 </Label.Text>
             </Label>
-            <ImageButton Source="boxicon.png"
-                    Clicked="ImageButton_Clicked"
-                    WidthRequest="20"
-                    HorizontalOptions="End"
-                    VerticalOptions="Center" />
-        </HorizontalStackLayout>
-        
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="0.5*"/>
-                <RowDefinition Height="3*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="2.5*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
+            <!--Save button-->
+            <ImageButton x:Name="SaveButton"
+                         Source="saveicon.png"
+                         Clicked="SaveButton_Clicked"
+                         HorizontalOptions="End"
+                         WidthRequest="20"
+                         Grid.Column="2"
+                         Grid.Row="0"
+                         />
+            <!--Delete button-->
+            <ImageButton x:Name="DeleteButton"
+                         Source="removeicon.png"
+                         Clicked="DeleteButton_Clicked"
+                         HorizontalOptions="End"
+                         WidthRequest="20"
+                         Grid.Column="2"
+                         Grid.Row="0"
+                         />
+            <!--Stops List-->
             <Label Text="Stops"
-                   Style="{StaticResource LabelSubHeader}"                  
+                   Style="{StaticResource LabelSubHeader}"
+                   Margin="{StaticResource DefaultMargin}"
+                   HorizontalOptions="Start"
                    Grid.Row="1"
                    Grid.Column="0"
                    Grid.ColumnSpan="2"
@@ -66,10 +86,10 @@
                                       Margin="10">
                                     <Label Text="{Binding Name}"
                                            Grid.Column="0"
-                                           Style="{StaticResource LabelHint}"/>
+                                           Style="{StaticResource LabelStandard}"/>
                                     <Label Grid.Column="2"
                                            HorizontalOptions="End"
-                                           Style="{StaticResource LabelHint}">
+                                           Style="{StaticResource LabelStandard}">
                                         <Label.Text>
                                             <MultiBinding StringFormat="{}{0}:{1:00}">
                                                 <Binding Path="DepartureTime.Hours"/>
@@ -83,11 +103,12 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </Border>
+            <!--Searched Stop Departure Time-->
             <VerticalStackLayout Grid.Row="1"
                                  Grid.Column="2"
                                  Grid.RowSpan="2"
                                  VerticalOptions="Center">
-                <Label Style="{StaticResource LabelStandard}"
+                <Label Style="{StaticResource LabelSubHeader}"
                        Grid.Column="2"
                        Grid.Row="1">
                     <Label.Text>
