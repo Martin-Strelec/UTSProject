@@ -46,15 +46,11 @@ namespace UTSProject.Resources.ViewModels
             // Show the Loading indicator
             IndicatorIsRunning = true;
             //Get the user input
-            UserInput input = new UserInput(SelectedDate, SelectedTime);
+            UserInput input = new(SelectedDate, SelectedTime);
             //Load the data
-            _connections = await _ld.AddConnectionsFromDatabase(input, _connections);
+            await _ld.AddConnectionsFromDatabase(input);
             // Navigate to another page
-            await Shell.Current.GoToAsync($"{nameof(ConnectionsPage)}",
-                new Dictionary<string, object>
-                {
-                    ["Connections"] = _connections
-                });
+            await Shell.Current.GoToAsync($"{nameof(ConnectionsPage)}");
         }
     }
 }
