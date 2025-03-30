@@ -3,109 +3,79 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:UTSProject.Resources.ViewModels"
              x:Class="UTSProject.Resources.Views.ConnectionsPage"
+             Loaded="ConnectionsPage_Loaded"
              Title="Connections">
-    <ScrollView>
-        <VerticalStackLayout WidthRequest="{StaticResource DefaultWidth}">
-            <Label Text="Connections"
+    <VerticalStackLayout WidthRequest="{StaticResource DefaultWidth}">
+        <Label Text="Connections"
                    Style="{StaticResource LabelHeader}"/>
-            <CollectionView ItemsSource="{Binding Connections}" 
+        <CollectionView x:Name="ConnectionsList"
+                            ItemsSource="{Binding Connections}" 
                             SelectionMode="Single" 
-                            SelectionChanged="OnItemSelected">
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical"
+                            SelectionChanged="OnItemSelected"
+                        HeightRequest="400">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"
                                      VerticalItemSpacing="1"/>
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Border Stroke="{StaticResource fgColor}"
-                                    Padding="{StaticResource mpDefault}"
-                                    Margin="10,0"
-                                    >
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="{StaticResource mpDefault}"/>
-                                </Border.StrokeShape>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="0.5*"/>
-                                        <ColumnDefinition Width="0.75*"/>
-                                        <ColumnDefinition Width="2*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Image Source="busicon.png"
-                                           Grid.Row="0"
-                                           Grid.Column="0"
-                                           Grid.RowSpan="2"
-                                           HorizontalOptions="Start"
-                                           VerticalOptions="Center"
-                                           WidthRequest="50"/>
-                                    <Label Text="{Binding RouteShortName}" 
-                                           Grid.Row="0"
-                                           Grid.Column="1"
-                                           Grid.RowSpan="2"
-                                           HorizontalOptions="Start"
-                                           VerticalOptions="Center"
-                                           FontSize="24"
-                                           />
-                                    <Label HorizontalOptions="End"
-                                           Grid.Row="0"
-                                           Grid.Column="3"
-                                           FontSize="16">
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Border Stroke="{StaticResource fgColor}"
+                                Padding="{StaticResource mpDefault}"
+                                Margin="10,0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="{StaticResource mpDefault}"/>
+                            </Border.StrokeShape>
+                            <Grid RowDefinitions="Auto"
+                                  ColumnDefinitions="0.5*, 0.75*,2*,*">
+                                  <Image Source="busicon.png"
+                                         Grid.Column="0"
+                                         HorizontalOptions="Start"
+                                         VerticalOptions="Center"
+                                         WidthRequest="50"/>
+                                <Label Text="{Binding RouteShortName}" 
+                                       Grid.Column="1"
+                                       HorizontalOptions="Start"
+                                       VerticalOptions="Center"
+                                       FontSize="24"/>
+                                <Label HorizontalOptions="End"
+                                       VerticalOptions="Center"
+                                       Grid.Column="3"
+                                       FontSize="16">
                                         <Label.Text>
                                             <MultiBinding StringFormat="{}{0}:{1:00}">
                                                 <Binding Path="SearchedStop.DepartureTime.Hours"/>
                                                 <Binding Path="SearchedStop.DepartureTime.Minutes"/>
                                             </MultiBinding>
                                         </Label.Text>
-                                    </Label>
-                                    <Label HorizontalOptions="End"
-                                           Grid.Row="1"
-                                           Grid.Column="3"
-                                           FontSize="18" >
-                                        <Label.Text>
-                                            <MultiBinding StringFormat="{}{0}:{1:00}">
-                                                <Binding Path="SearchedStop.DepartureTime.Hours"/>
-                                                <Binding Path="SearchedStop.DepartureTime.Minutes"/>
+                                </Label>
+                                <Label HorizontalOptions="Start"
+                                       VerticalOptions="Center"
+                                       Grid.Column="2"
+                                       FontSize="14">
+                                       <Label.Text>
+                                            <MultiBinding StringFormat="{}{0} - {1}">
+                                                <Binding Path="SearchedStop.Name"/>
+                                                <Binding Path="EndStop.Name"/>
                                             </MultiBinding>
-                                        </Label.Text>
-                                    </Label>
-                                    <Label Text="{Binding SearchedPointName, StringFormat='{0} - {1}', Mode=OneWay}"                         
-                                           HorizontalOptions="Start"
-                                           Grid.RowSpan="2"
-                                           VerticalOptions="Center"
-                                           Grid.Row="0"
-                                           Grid.Column="2"
-                                           FontSize="14">
-                                        <Label.FormattedText>
-                                            <FormattedString>
-                                                <Span Text="{Binding SearchedStop.Name}" />
-                                                <Span Text=" - " />
-                                                <Span Text="{Binding EndStop.Name}" />
-                                            </FormattedString>
-                                        </Label.FormattedText>
-                                    </Label>
-                                </Grid>
-                            </Border>
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-            <Button x:Name="LoadMoreBtn"
+                                       </Label.Text>
+                                </Label>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button x:Name="LoadMoreBtn"
                     IsVisible="{Binding ButtonIsVisible}"
                     Style="{StaticResource DefaultButton}"
                     Command="{Binding LoadAnotherCommand}"
                     Text="Load more"/>
-        </VerticalStackLayout>
-
-    </ScrollView>
+    </VerticalStackLayout>
 </ContentPage>
