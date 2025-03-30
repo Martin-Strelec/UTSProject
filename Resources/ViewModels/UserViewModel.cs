@@ -9,5 +9,6 @@ namespace UTSProject.Resources.ViewModels
 {
     public partial class UserViewModel : ObservableObject
     {
+        // To be added
     }
 }

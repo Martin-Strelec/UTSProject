@@ -5,13 +5,16 @@
              Loaded="SavedConnectionsPage_Loaded"
              Title="Saved">
     <VerticalStackLayout WidthRequest="{StaticResource DefaultWidth}">
+        <!--Header-->
         <Label Text="Saved Connections"
                Style="{StaticResource LabelHeader}"
                Margin="0,10,0,20"/>
+        <!--Empty List label-->
         <Label x:Name="EmptyListLabel"
                Text="No saved connections..."
                Style="{StaticResource LabelHint}"
                HorizontalOptions="Center"/>
+        <!--Connections list-->
         <CollectionView x:Name="ConnectionsList"
                         ItemsSource="{Binding Connections}" 
                         SelectionMode="Single" 
@@ -23,13 +26,9 @@
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
+                    <Grid RowDefinitions="Auto"
+                          ColumnDefinitions="Auto">
+                        <!--Item border-->
                         <Border Stroke="{StaticResource fgColor}"
                                 Padding="{StaticResource mpDefault}"
                                 Margin="10,0"
@@ -39,17 +38,20 @@
                             </Border.StrokeShape>
                             <Grid RowDefinitions="Auto"
                                   ColumnDefinitions="0.5*, 0.75*,2*,*">
+                                <!--Item icon-->
                                 <Image Source="busicon.png"
                                        Grid.Column="0"
                                        HorizontalOptions="Start"
                                        VerticalOptions="Center"
                                        WidthRequest="50"/>
+                                <!--RouteShortName label-->
                                 <Label Text="{Binding RouteShortName}" 
                                        Grid.Column="1"
                                        HorizontalOptions="Start"
                                        VerticalOptions="Center"
                                        FontSize="24"
                                        />
+                                <!--DepartureTime label-->
                                 <Label HorizontalOptions="End"
                                        VerticalOptions="Center"
                                        Grid.Column="3"
@@ -61,6 +63,7 @@
                                         </MultiBinding>
                                     </Label.Text>
                                 </Label>
+                                <!--TripLongName label-->
                                 <Label HorizontalOptions="Start"
                                        VerticalOptions="Center"
                                        Grid.Column="2"

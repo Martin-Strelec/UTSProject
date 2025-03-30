@@ -17,11 +17,11 @@ public class DbService
 {
     private readonly string _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=NTALocalDatabase;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
 
-    public async Task<List<StopModel>> GetTripStops(string tripID)
+    public async Task<List<StopModel>> GetTripStops(string tripID) // Calls "GetTripStops" stored procedure that retrives all stops for selected trip
     {
-        using (SqlConnection conn = new(_connectionString))
+        using (SqlConnection conn = new(_connectionString)) // Initializes sql connection
         {
-            var stops = new List<StopModel>();
+            var stops = new List<StopModel>(); // Initializes new List of Stops
             try
             {
                 await conn.OpenAsync();
@@ -54,12 +54,12 @@ public class DbService
         }
     }
 
-    public async Task<List<TripModel>> GetAllTripsForStop(string stopName)
+    public async Task<List<TripModel>> GetAllTripsForStop(string stopName) // Calls "GetAllTripsForStopName stored procedure that retrives all trips that are bound to selected stop
     {
         using (SqlConnection conn = new(_connectionString))
         {
-            var trips = new List<TripModel>();
-            try
+            var trips = new List<TripModel>(); // Initializes new List of trips
+            try 
             {
                 await conn.OpenAsync();
                 using (SqlCommand cmd = new("GetAllTripsForStopName", conn))
@@ -87,11 +87,11 @@ public class DbService
         }
     }
 
-    public async Task<RouteModel> GetRouteDetails(string tripID)
+    public async Task<RouteModel> GetRouteDetails(string tripID) // Calls "GetRouteDetails" stored procedure that retrives details about selected route 
     {
         using (SqlConnection conn = new(_connectionString))
         {
-            RouteModel route = new RouteModel();
+            RouteModel route = new RouteModel(); // Initializes a new route variable
             try
             {
                 await conn.OpenAsync();
@@ -123,11 +123,11 @@ public class DbService
         }
     }
 
-    public async Task<List<TripModel>> GetTripsByStopAndTime(string stopName, string time)
+    public async Task<List<TripModel>> GetTripsByStopAndTime(string stopName, string time) // Calls "GetTripsByStopAndTime" stored procedure that retrives all trips bound to a stop at specific time
     {
         using (SqlConnection conn = new(_connectionString))
         {
-            var trips = new List<TripModel>();
+            var trips = new List<TripModel>(); // Initializes new List of trips
             try
             {
                 await conn.OpenAsync();
@@ -157,11 +157,11 @@ public class DbService
         }
     }
 
-    public async Task<List<TripModel>> GetTripsByStopTimeDay(string day,string stopName, string time)
+    public async Task<List<TripModel>> GetTripsByStopTimeDay(string day,string stopName, string time) // Calls "GetTripsByStop_Time_Day" stored procedure that retrives all trips bound to a stop on specific day at specific time
     {
         using (SqlConnection conn = new(_connectionString))
         {
-            var trips = new List<TripModel>();
+            var trips = new List<TripModel>(); // Initializes new List of trips
             try
             {
                 await conn.OpenAsync();
@@ -192,11 +192,11 @@ public class DbService
         }
     }
 
-    public async Task<List<TripModel>> GetRoutesByStopAndTime(string stopName, string time)
+    public async Task<List<TripModel>> GetRoutesByStopAndTime(string stopName, string time) // Calls "GetRoutesByStopAndTime" stored procedure that retrives all routes bound to a stop at specific time
     {
         using (SqlConnection conn = new(_connectionString))
         {
-            var trips = new List<TripModel>();
+            var trips = new List<TripModel>();  // Initializes new List of trips
             try
             {
                 await conn.OpenAsync();

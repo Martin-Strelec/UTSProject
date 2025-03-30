@@ -4,12 +4,14 @@ namespace UTSProject.Resources.Views;
 
 public partial class DetailPage : ContentPage
 {
+    //Private properties
     private DetailViewModel _vm;
     private SavedConnectionsService _sc;
     public DetailPage(DetailViewModel vm, SavedConnectionsService sc)
     {
         InitializeComponent();
         BindingContext = vm;
+        // DI
         _vm = vm;
         _sc = sc;
 
@@ -17,8 +19,9 @@ public partial class DetailPage : ContentPage
 
     private void DetailPage_Loaded(object sender, EventArgs e)
     {
-        if (_vm.ConnectionDetails.IsNotSaved)
+        if (_vm.ConnectionDetails.IsNotSaved) //Checks if the current connections is not saved
         {
+            // Change the visibility of XAML objects
             SaveButton.IsVisible = true;
             DeleteButton.IsVisible = false;
         }

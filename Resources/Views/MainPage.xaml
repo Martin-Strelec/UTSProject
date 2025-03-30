@@ -4,34 +4,39 @@
              x:Class="UTSProject.Resources.Views.MainPage"
              Title="Search"
              Loaded="OnPageLoaded">
-    <ScrollView WidthRequest="400">
-        <StackLayout x:Name="MainStack" Orientation="Vertical" Padding="20" Spacing="20">
-            <VerticalStackLayout>
-                <Label Text="ATU Sligo Public Transport App"
+    <StackLayout x:Name="MainStack" Orientation="Vertical" Padding="20" Spacing="20" WidthRequest="{StaticResource DefaultWidth}">
+        <VerticalStackLayout WidthRequest="450">
+            <!--Header-->
+            <Label Text="ATU Sligo Public Transport App"
                        Style="{StaticResource LabelHeader}"
                        Margin="0,0,0,20"/>
-                <Label Text="Select Time"
+            <!--Date Picker label-->
+            <Label Text="Select Date"
                        Style="{StaticResource LabelHint}"/>
-                <DatePicker
+            <!--Date picker-->
+            <DatePicker
                         FontSize="20"
                         Margin="10"
-                        WidthRequest="400"
+                        WidthRequest="450"
                         HeightRequest="50"
                         VerticalOptions="Center"
                         HorizontalOptions="Center"
                         Date="{Binding SelectedDate, Mode=TwoWay}"
                         />
-                <Label Text="Select Date"
+            <!--Connection icon-->
+            <Label Text="Select Time"
                        Style="{StaticResource LabelHint}"/>
-                <TimePicker   
+            <!--Time picker-->
+            <TimePicker   
                         FontSize="18"
                         Margin="10"
-                        WidthRequest="400"
+                        WidthRequest="450"
                         VerticalOptions="Center"
                         HorizontalOptions="Center"
                         Time="{Binding SelectedTime, Mode=TwoWay}"/>
-            </VerticalStackLayout>
-            <Button Margin="10"
+        </VerticalStackLayout>
+        <!--Search button-->
+        <Button Margin="10"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     Style="{StaticResource DefaultButton}"
@@ -39,16 +44,8 @@
                     IsVisible="{Binding ButtonIsVisible}"
                     Text="Search" 
                     WidthRequest="200"/>
-            <ActivityIndicator IsRunning="{Binding IndicatorIsRunning}"
+        <!--loading icon-->
+        <ActivityIndicator IsRunning="{Binding IndicatorIsRunning}"
             Margin="10"/>
-            
-            <!--<Label Text="Traffic News" FontSize="Header"/>
-            <ScrollView Padding="15" HeightRequest="300" BackgroundColor="pink">
-                <VerticalStackLayout>
-
-                </VerticalStackLayout>
-            </ScrollView>-->
-        </StackLayout>
-    </ScrollView>
-
+    </StackLayout>
 </ContentPage>

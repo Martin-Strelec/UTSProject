@@ -8,6 +8,6 @@ namespace UTSProject.Resources.ViewModels
 {
     class TicketsViewModel
     {
-
+        // To be added
     }
 }

@@ -9,14 +9,16 @@ namespace UTSProject.Resources.Services
 {
     public class NTAService
     {
+        // DI
         HttpClient _client;
         JsonSerializerOptions _serializerOptions;
-
+        // Private properties
         private readonly string apiUri = "https://api.nationaltransport.ie/gtfsr/v2/gtfsr?format=json";
         private readonly string apiKey = Environment.GetEnvironmentVariable("api_key");
         private readonly DbService _dbservice;
         private static int _paginationStart = 0;
         private static int _paginationStep = 25;
+        //Public properties
         public List<Entity> Items { get; private set; }
         public GtfsRealtimeResponse Response { get; private set; }
 

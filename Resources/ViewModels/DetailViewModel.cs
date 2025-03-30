@@ -11,9 +11,10 @@ using UTSProject.Resources.Views;
 
 namespace UTSProject.Resources.ViewModels
 {
-    [QueryProperty("ConnectionDetails", "ConnectionDetails")]
+    [QueryProperty("ConnectionDetails", "ConnectionDetails")] // Query property used to recieve data from another pages
     public partial class DetailViewModel : ObservableObject
     {
+        // Observable properties
         [ObservableProperty]
         private ConnectionDetailsModel _connectionDetails;
 

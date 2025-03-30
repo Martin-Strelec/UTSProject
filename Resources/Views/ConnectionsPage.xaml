@@ -6,8 +6,10 @@
              Loaded="ConnectionsPage_Loaded"
              Title="Connections">
     <VerticalStackLayout WidthRequest="{StaticResource DefaultWidth}">
+        <!--Header-->
         <Label Text="Connections"
                    Style="{StaticResource LabelHeader}"/>
+        <!--Connections List-->
         <CollectionView x:Name="ConnectionsList"
                             ItemsSource="{Binding Connections}" 
                             SelectionMode="Single" 
@@ -26,24 +28,29 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
+                        <!--Item border-->
                         <Border Stroke="{StaticResource fgColor}"
                                 Padding="{StaticResource mpDefault}"
                                 Margin="10,0">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="{StaticResource mpDefault}"/>
                             </Border.StrokeShape>
+                            <!--Grid-->
                             <Grid RowDefinitions="Auto"
                                   ColumnDefinitions="0.5*, 0.75*,2*,*">
+                                  <!--Connection icon-->
                                   <Image Source="busicon.png"
                                          Grid.Column="0"
                                          HorizontalOptions="Start"
                                          VerticalOptions="Center"
                                          WidthRequest="50"/>
+                                <!--RouteShortName Label-->
                                 <Label Text="{Binding RouteShortName}" 
                                        Grid.Column="1"
                                        HorizontalOptions="Start"
                                        VerticalOptions="Center"
                                        FontSize="24"/>
+                                <!--DepartureTime Label-->
                                 <Label HorizontalOptions="End"
                                        VerticalOptions="Center"
                                        Grid.Column="3"
@@ -55,6 +62,7 @@
                                             </MultiBinding>
                                         </Label.Text>
                                 </Label>
+                                <!--Searched and End stop names-->
                                 <Label HorizontalOptions="Start"
                                        VerticalOptions="Center"
                                        Grid.Column="2"
@@ -72,6 +80,7 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        <!--Load more button-->
         <Button x:Name="LoadMoreBtn"
                     IsVisible="{Binding ButtonIsVisible}"
                     Style="{StaticResource DefaultButton}"

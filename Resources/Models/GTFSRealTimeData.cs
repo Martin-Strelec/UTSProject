@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace UTSProject.Resources.Models
-{ 
+{
+    /*
+     * Whole structure of the JSON response can be found at this link: https://developer.nationaltransport.ie/
+     * This is subject to change as it was very poorly designed
+     */
     public class GtfsRealtimeResponse
     {
         public Header Header { get; set; }
@@ -77,12 +81,12 @@ namespace UTSProject.Resources.Models
 
     public class Arrival
     {
-        public int? Delay { get; set; } // Nullable to handle missing values
+        public int? Delay { get; set; }
     }
 
     public class Departure
     {
-        public int? Delay { get; set; } // Nullable to handle missing values
+        public int? Delay { get; set; }
     }
 
     public class Vehicle

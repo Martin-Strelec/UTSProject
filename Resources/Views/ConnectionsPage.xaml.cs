@@ -6,20 +6,23 @@ namespace UTSProject.Resources.Views;
 
 public partial class ConnectionsPage : ContentPage
 {
+    // private properties
     private LoadDataService _ld;
     private ConnectionsViewModel _vm;
     public ConnectionsPage(ConnectionsViewModel vm, LoadDataService ld)
     {
         InitializeComponent();
         BindingContext = vm;
+        // DI
         _vm = vm;
         _ld = ld;
     }
 
     private async void OnItemSelected(object sender, SelectionChangedEventArgs e)
     {
-        if (e.CurrentSelection.FirstOrDefault() is ConnectionDetailsModel selectedItem)
+        if (e.CurrentSelection.FirstOrDefault() is ConnectionDetailsModel selectedItem) // Gets the currently selected item
         {
+            // Passes the selected item to next page
             await Shell.Current.GoToAsync($"/{nameof(ConnectionsPage)}/{nameof(DetailPage)}",
                 new Dictionary<string, object>
                 {
@@ -28,14 +31,9 @@ public partial class ConnectionsPage : ContentPage
         }
     }
 
-    //private async void OnBackButtonClicked(object sender, EventArgs e)
-    //{
-    //    await Shell.Current.GoToAsync($"{nameof(MainPage)}"); // Manually navigate back
-    //}
-
     private void ConnectionsPage_Loaded(object sender, EventArgs e)
     {
-        ConnectionsList.SelectedItem = null;
-        _vm.Connections = _ld.Connections;
+        ConnectionsList.SelectedItem = null; // Sets the selected item to null
+        _vm.Connections = _ld.Connections; // Loads connections to private property
     }
 }

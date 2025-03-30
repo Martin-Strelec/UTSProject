@@ -15,6 +15,7 @@ namespace UTSProject.Resources.Services
 {
     public class LoadDataService
     {
+        // Private properties & DI objects
         private NTAService _nta;
         private DbService _db;
         private List<TripModel> _trips;
@@ -22,48 +23,36 @@ namespace UTSProject.Resources.Services
         private int _paginationStart;
         private int _paginationStep;
         private string _stopName;
-
+        // Public properties
         public ObservableCollection<ConnectionDetailsModel> Connections;
         public LoadDataService(NTAService nta, DbService db)
         {
-            _nta = nta;
+            _nta = nta; //Assigning DI services to private properties
             _db = db;
-            Connections = new ObservableCollection<ConnectionDetailsModel>();
-            _stopName = "ATU Sligo";
+            Connections = new ObservableCollection<ConnectionDetailsModel>(); // Initializing Collection of Connections
+            _stopName = "ATU Sligo"; //TEMP VARIABLE -> Will be removed in the future
+            // Initialization of Pagination
             _paginationStart = 0;
             _paginationStep = 25;
         }
-        public async Task<ObservableCollection<ConnectionDetailsModel>> LoadDataFromAPI(UserInput uInput)
+        public async Task<ObservableCollection<ConnectionDetailsModel>> LoadDataFromAPI(UserInput uInput) // Method Used to load data from an API (USING NTAService)
         {
-            //Showing the loading indicator
-            //IndicatorIsVisible = true;
-
             //Initializing Collection
             ObservableCollection<ConnectionDetailsModel> Connections = new ObservableCollection<ConnectionDetailsModel>();
 
             //Using NTAService method for storing entities
             await _nta.ReadDataAsync(uInput.Time);
 
-            // Add data to List
-
             return await AddToConnections(Connections);
-
-            //Hiding the loading indicator
-            //IndicatorIsVisible = false;
-
-            //Setting the view to true
-            //ConnectionsIsVisible = true;
-
-            //Setting the Button to visible
-            //ButtonIsVisible = true;
         }
 
-        public async Task<ObservableCollection<ConnectionDetailsModel>> AddToConnections(ObservableCollection<ConnectionDetailsModel> connections)
+        public async Task<ObservableCollection<ConnectionDetailsModel>> AddToConnections(ObservableCollection<ConnectionDetailsModel> connections) // Used for adding data to public property Connections when loading from an API 
         {
             await foreach (var entity in _nta.InitializeData())
             {
-                string tripID = entity.TripUpdate.Trip.TripID;
+                string tripID = entity.TripUpdate.Trip.TripID; // Dynamic variable
 
+                //Checks if the TripID is not null
                 if (tripID == null)
                 {
                     Console.WriteLine("Skipping due to tripID being null");
@@ -72,14 +61,18 @@ namespace UTSProject.Resources.Services
 
                 try
                 {
+                    // Database queries/tasks
                     var routeTask = _db.GetRouteDetails(tripID);
                     var stopsTask = _db.GetTripStops(tripID);
 
-                    await Task.WhenAll(routeTask, stopsTask); // Run both tasks in parallel
+                    // Run both tasks in parallel
+                    await Task.WhenAll(routeTask, stopsTask);
 
+                    // Save the results
                     var dbRouteDetails = routeTask.Result;
                     var dbStops = stopsTask.Result;
 
+                    // Checks if the results are not null
                     if (dbRouteDetails == null || dbStops.Count == 0)
                     {
                         Console.WriteLine($"Missing data for TripID: {entity.TripUpdate.Trip.TripID}");
@@ -103,32 +96,29 @@ namespace UTSProject.Resources.Services
             return connections;
         }
 
-        public async Task<bool> AddConnectionsFromDatabase(UserInput input)
+        public async Task<bool> AddConnectionsFromDatabase(UserInput input) // Handles adding new connections based on the user input to public property Connections
         {
-            // Reset pagination
-            _paginationStart = 0;
-            // Clear the Connections
-            Connections.Clear();
+
+            _paginationStart = 0; // Reset pagination
+            Connections.Clear(); // Clear the Connections
             // Clear the List
             if (_trips != null)
             {
                 _trips.Clear();
             }
-            // Store the user input
-            _userInput = input;
 
-            _trips = await _db.GetTripsByStopTimeDay(input.Date.DayOfWeek.ToString(),_stopName, input.Time.ToString());
-
-            Connections = await InitializeConnections(_stopName, Connections);
+            _userInput = input; // Store the user input
+            _trips = await _db.GetTripsByStopTimeDay(input.Date.DayOfWeek.ToString(), _stopName, input.Time.ToString());  // Load the trips from database into private property
+            Connections = await InitializeConnections(_stopName, Connections); // Load the connections into public property
 
             return true;
         }
 
-        private async Task<ObservableCollection<ConnectionDetailsModel>> InitializeConnections(string stopName, ObservableCollection<ConnectionDetailsModel> connections)
+        private async Task<ObservableCollection<ConnectionDetailsModel>> InitializeConnections(string stopName, ObservableCollection<ConnectionDetailsModel> connections) // Filters connections and saves them to a new list
         {
             foreach (var t in _trips.Skip(_paginationStart).Take(_paginationStep))
             {
-                string tripID = t.TripID;
+                string tripID = t.TripID; // Dynamic Variable
 
                 if (tripID == null)
                 {
@@ -141,33 +131,33 @@ namespace UTSProject.Resources.Services
                     var routeTask = _db.GetRouteDetails(tripID);
                     var stopsTask = _db.GetTripStops(tripID);
 
-                    await Task.WhenAll(routeTask, stopsTask); // Run both tasks in parallel
+                    await Task.WhenAll(routeTask, stopsTask);
 
                     var dbRouteDetails = routeTask.Result;
                     var dbStops = stopsTask.Result;
 
-                    var result = dbStops.FirstOrDefault(t => t.Name == stopName);
+                    var result = dbStops.FirstOrDefault(t => t.Name == stopName); // Searching for searched stop in the stops list
 
-                    if (dbRouteDetails == null || dbStops.Count == 0)
+                    if (dbRouteDetails == null || 
+                        dbStops.Count == 0 || 
+                        dbStops[dbStops.Count - 1].Name == stopName
+                        )
                     {
                         Console.WriteLine($"Missing data for TripID: {t.TripID}");
                         continue; // Skip this iteration
                     }
 
-                    if (dbStops[dbStops.Count - 1].Name != stopName)
+                    connections.Add(new ConnectionDetailsModel
                     {
-                        connections.Add(new ConnectionDetailsModel
-                        {
-                            Date = _userInput.Date,
-                            Time = _userInput.Date.TimeOfDay,
-                            IsNotSaved = true,
-                            RouteShortName = dbRouteDetails.RouteShortName,
-                            RouteLongName = dbRouteDetails.RouteLongName,
-                            SearchedStop = result,
-                            EndStop = dbStops[dbStops.Count - 1],
-                            Stops = dbStops
-                        });
-                    }
+                        Date = _userInput.Date,
+                        Time = _userInput.Date.TimeOfDay,
+                        IsNotSaved = true,
+                        RouteShortName = dbRouteDetails.RouteShortName,
+                        RouteLongName = dbRouteDetails.RouteLongName,
+                        SearchedStop = result,
+                        EndStop = dbStops[dbStops.Count - 1],
+                        Stops = dbStops
+                    });
                 }
                 catch (Exception e)
                 {
@@ -177,12 +167,11 @@ namespace UTSProject.Resources.Services
             // Incrementing pagination
             _paginationStart += _paginationStep;
             return connections;
-        } 
+        }
 
-
-        public async Task<ObservableCollection<ConnectionDetailsModel>> LoadAnother()
+        public async Task<ObservableCollection<ConnectionDetailsModel>> LoadAnother() // Loads another set of connections into Connections property
         {
             return await InitializeConnections(_stopName, Connections);
-        } 
+        }
     }
 }

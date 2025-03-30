@@ -8,8 +8,8 @@ namespace UTSProject.Resources.Models
 {
     public class UserInput
     {
-        public DateTime Date {  get; set; }
-        public TimeSpan Time { get; set; }
+        public DateTime Date {  get; set; } // User inputted date and time combined
+        public TimeSpan Time { get; set; } // User inputted time
 
         public UserInput(DateTime date, TimeSpan time)
         {

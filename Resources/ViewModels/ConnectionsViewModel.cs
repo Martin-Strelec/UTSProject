@@ -8,9 +8,10 @@ using System.Diagnostics;
 
 namespace UTSProject.Resources.ViewModels
 {
-    [QueryProperty(nameof(Connections), nameof(Connections))]
+    [QueryProperty(nameof(Connections), nameof(Connections))] // Query property used for recieving data from another page
     public partial class ConnectionsViewModel : ObservableObject
     {
+        // Observable properties
         [ObservableProperty]
         private ObservableCollection<ConnectionDetailsModel> _connections;
 
@@ -23,12 +24,14 @@ namespace UTSProject.Resources.ViewModels
         [ObservableProperty]
         private bool _buttonIsVisible;
 
+        // Private properties
         private LoadDataService _ld;
 
         public ConnectionsViewModel(LoadDataService ld)
         {
-            _ld = ld;
-            ConnectionsIsVisible = false;
+            _ld = ld; // assigning di service to a private property
+            // Setting default state for XAML objects
+            ConnectionsIsVisible = false; 
             ButtonIsVisible = true;
         }
 

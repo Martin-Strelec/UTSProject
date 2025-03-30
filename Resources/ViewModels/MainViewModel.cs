@@ -15,6 +15,7 @@ namespace UTSProject.Resources.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
+        // Observable properties
         [ObservableProperty]
         private DateTime _selectedDate;
         [ObservableProperty]
@@ -23,12 +24,13 @@ namespace UTSProject.Resources.ViewModels
         private bool _buttonIsVisible;
         [ObservableProperty]
         private bool _indicatorIsRunning;
-
+        // Private properties
         private ObservableCollection<ConnectionDetailsModel> _connections;
         private LoadDataService _ld;
 
         public MainViewModel(LoadDataService ld)
         {
+            // Setting the current time for XAML DatePicker and TimePicker
             SelectedDate = DateTime.Now;
             SelectedTime = DateTime.Now.TimeOfDay;
             IndicatorIsRunning = false;

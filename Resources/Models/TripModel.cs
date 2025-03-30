@@ -10,6 +10,6 @@ namespace UTSProject.Resources.Models
     public class TripModel
     {
         [Column("trip_id")]
-        public string TripID { get; set; } 
+        public string TripID { get; set; } //Id of the trip
     }
 }
