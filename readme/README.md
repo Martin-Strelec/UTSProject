@@ -1,5 +1,9 @@
 # UTSProject - Public Transport App for Ireland
-# Introduction
+## Installation
+As for now the whole solution for Visual Studio exist as three seperate projects. The UTSProject, UTSProject.Test and UTSProject Database. These projects will be available in their seperate github repos soon enough. Currently, I only provide zipped file containing all of these projects for marking purposes only.
+### Database Import
+In order to use the application it is required to import a NTADatabase projetc included in the zipped file. The guide on how to do this is described in the Microsoft documentation: [SQLServer - Getting Started With SQL projects](https://learn.microsoft.com/en-us/sql/tools/sql-database-projects/get-started?view=sql-server-ver16&pivots=sq1-visual-studio). After importing the database into your local sql server you need to change the connection string in the Services/DbService file for the new connection string of the imported database. 
+## Introduction
 The goal of this project was to create a better working app for public transport using .NET MAUI framework. Most of the apps available on the market today are not intuitive and easy to use. They are often made for specific vendors which makes every app different resulting in lacking coherence. Project tries to mitigate these problems and brings new, easy-to-use interface for the user. 
 *\*App is in early stage of development and will continue to be worked on*
 ## APIs and Services
